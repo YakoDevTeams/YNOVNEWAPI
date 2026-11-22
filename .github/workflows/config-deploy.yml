@@ -50,7 +50,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lftp
-          # Création d'un script lftp pour gérer les exclusions
+
+          # Création du script lftp
           cat > deploy.lftp << 'EOF'
           set ssl:verify-certificate no
           set ftp:ssl-protect-data true
@@ -60,22 +61,24 @@ jobs:
 
           open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ftps://${{ secrets.FTP_SERVER }}
 
-          # Synchronisation avec exclusions
-          mirror -R --verbose \
+          # La syntaxe est : mirror -R [options] <dossier_local> <dossier_distant>
+          # On utilise le chemin absolu du workspace GitHub pour être sûr
+          mirror -R --delete --verbose \
             --exclude-glob .git* \
-            --exclude-glob .github/ \
-            --exclude-glob node_modules/ \
-            --exclude-glob vendor/ \
-            --exclude-glob tests/ \
+            --exclude-glob .github \
+            --exclude-glob node_modules \
+            --exclude-glob vendor \
+            --exclude-glob tests \
             --exclude-glob .env* \
             --exclude-glob phpunit.xml \
             --exclude-glob README.md \
-            --exclude-glob storage/logs/ \
-            --exclude-glob storage/framework/cache/ \
-            --exclude-glob storage/framework/sessions/ \
-            --exclude-glob storage/framework/testing/ \
-            --exclude-glob storage/framework/views/ \
-            ./api.ynovservices.com/
+            --exclude-glob storage/logs \
+            --exclude-glob storage/framework/cache \
+            --exclude-glob storage/framework/sessions \
+            --exclude-glob storage/framework/testing \
+            --exclude-glob storage/framework/views \
+            ${{ github.workspace }} \
+            api.ynovservices.com/
 
           bye
           EOF
