@@ -53,8 +53,12 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
-          server-dir: ${{ vars.FTP_SERVER_DIR }}
-          local-dir: ./api.ynovservices.com/
+          # server-dir: ${{ vars.FTP_SERVER_DIR }}
+          # local-dir: ./api.ynovservices.com/
+
+          server-dir: public_html/api.ynovservices.com/
+          # On envoie le contenu du dépôt GitHub
+          local-dir: ./
           exclude: |
             **/.git*
             **/.git*/**
