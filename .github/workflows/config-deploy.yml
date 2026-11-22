@@ -54,8 +54,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
           server-dir: ${{ vars.FTP_SERVER_DIR }}
-          local-dir: ./
-          # OPTIONNEL : si tu as des problèmes de lenteur, tu peux utiliser lftp
+          local-dir: ./api.ynovservices.com/
           exclude: |
             **/.git*
             **/.git*/**
