@@ -13,6 +13,8 @@ concurrency:
   group: deploy-production
   cancel-in-progress: true
 
+  # test deploie
+
 jobs:
   deploy:
     name: Build and deploy
@@ -48,22 +50,21 @@ jobs:
 
       - name: Deploy via lftp
         run: |
-          sudo apt-get update
           sudo apt-get install -y lftp
 
-          # Création du script lftp
           cat > deploy.lftp << 'EOF'
           set ssl:verify-certificate no
           set ftp:ssl-protect-data true
           set ftp:ssl-force true
-          set mirror:parallel-transfer-count 2
+          # Affiche les commandes exécutées et l'avancement
+          set xfer:verbosity 3
           set net:timeout 30
+          set net:max-retries 3
 
           open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ftps://${{ secrets.FTP_SERVER }}
 
-          # La syntaxe est : mirror -R [options] <dossier_local> <dossier_distant>
-          # On utilise le chemin absolu du workspace GitHub pour être sûr
-          mirror -R --delete --verbose \
+          # --verbose affiche les fichiers, -p crée les dossiers parents si besoin
+          mirror -R -p --delete --verbose \
             --exclude-glob .git* \
             --exclude-glob .github \
             --exclude-glob node_modules \
@@ -83,5 +84,5 @@ jobs:
           bye
           EOF
 
-          # Exécution du script
-          lftp -f deploy.lftp
+          # -d 1 active le mode debug pour voir les échanges avec le serveur
+          lftp -d 1 -f deploy.lftp
