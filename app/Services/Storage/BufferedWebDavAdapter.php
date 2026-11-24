@@ -20,7 +20,8 @@ use Sabre\DAV\Client;
  */
 class BufferedWebDavAdapter extends WebDAVAdapter
 {
-    private const CHUNK_SIZE = 8 * 1024 * 1024; // 8 Mo par chunk
+    // private const CHUNK_SIZE = 8 * 1024 * 1024; // 8 Mo par chunk
+    private const CHUNK_SIZE = 512 * 1024; // 512 Ko : sous la limite ~1 Mo du serveur
 
     public function __construct(
         Client $client,
