@@ -293,12 +293,20 @@ class AuthService
 
 
         if ($count === self::ALERT_THRESHOLD && $user->email) {
-            Mail::to($user->email)->queue(new LoginFailedAlertMail(
-                $user->fresh('details'),
-                $count,
-                $deviceInfo['ip'] ?? null,
-                $deviceInfo['location'] ?? null,
-            ));
+            try {
+                Mail::to($user->email)->queue(new LoginFailedAlertMail(
+                    $user->fresh('details'),
+                    $count,
+                    $deviceInfo['ip'] ?? null,
+                    $deviceInfo['location'] ?? null,
+                ));
+            } catch (\Throwable $e) {
+                Log::error('Échec envoi LoginFailedAlertMail', [
+                    'user_uuid' => $user->uuid_user,
+                    'email' => $user->email,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
     }
 

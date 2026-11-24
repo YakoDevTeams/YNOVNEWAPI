@@ -6,6 +6,7 @@ use App\Models\Api\Ynov\parameter\OtpCode;
 use App\Models\Api\Ynov\parameter\User;
 use App\Services\SMSService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OtpService
@@ -133,14 +134,29 @@ class OtpService
                 ];
             }
 
-            Mail::to($email)->queue(
-                new OtpMail(
-                    $user->details,
-                    $purpose,
-                    $code,
-                    $expiryMinutes
-                )
-            );
+            try {
+                Mail::to($email)->queue(
+                    new OtpMail(
+                        $user->details,
+                        $purpose,
+                        $code,
+                        $expiryMinutes
+                    )
+                );
+            } catch (\Throwable $e) {
+                Log::error('Échec envoi OTP par email', [
+                    'user_uuid' => $user->uuid_user,
+                    'email' => $email,
+                    'purpose' => $purpose,
+                    'error' => $e->getMessage(),
+                ]);
+
+                return [
+                    'success' => false,
+                    'code' => 'OTP_SEND_FAILED',
+                    'message' => 'Impossible d\'envoyer le code OTP par email. Veuillez réessayer ou utiliser un autre canal.',
+                ];
+            }
 
             return [
                 'success' => true,

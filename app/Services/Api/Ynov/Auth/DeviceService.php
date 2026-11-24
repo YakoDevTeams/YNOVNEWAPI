@@ -185,7 +185,15 @@ class DeviceService
             ]);
 
             if ($user->email) {
-                Mail::to($user->email)->queue(new NewDeviceMail($user->fresh('details'), $result));
+                try {
+                    Mail::to($user->email)->queue(new NewDeviceMail($user->fresh('details'), $result));
+                } catch (\Throwable $e) {
+                    Log::error('Échec envoi NewDeviceMail', [
+                        'user_uuid' => $user->uuid_user,
+                        'email' => $user->email,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
             }
         }
         return $result;
