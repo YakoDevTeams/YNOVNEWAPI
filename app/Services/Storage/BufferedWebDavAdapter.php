@@ -3,6 +3,7 @@
 namespace App\Services\Storage;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use League\Flysystem\Config;
 use League\Flysystem\UnableToWriteFile;
 use League\Flysystem\WebDAV\WebDAVAdapter;
@@ -48,9 +49,15 @@ class BufferedWebDavAdapter extends WebDAVAdapter
         try {
             parent::write($path, $contents, $config);
         } catch (UnableToWriteFile $e) {
-            if (!str_contains($e->getMessage(), '413') || !$this->chunkedUpload($path, $contents)) {
+            if (!str_contains($e->getMessage(), '413')) {
                 throw $e;
             }
+
+            if ($this->chunkedUpload($path, $contents)) {
+                return;
+            }
+
+            throw $e;
         }
     }
 
@@ -76,6 +83,13 @@ class BufferedWebDavAdapter extends WebDAVAdapter
         $uploadsBase = preg_replace('#/files/[^/]+/$#', '/uploads/' . $userName . '/', $filesBase);
 
         if (!$uploadsBase || $uploadsBase === $filesBase) {
+            $uploadsBase = str_replace('/files/', '/uploads/', $filesBase);
+        }
+
+        if (!$uploadsBase || $uploadsBase === $filesBase) {
+            Log::warning('[WebDAV] chunkedUpload: impossible de dériver uploadsBase', [
+                'base_uri' => $baseUri,
+            ]);
             return false;
         }
 
@@ -97,6 +111,11 @@ class BufferedWebDavAdapter extends WebDAVAdapter
         $mkcol = $auth()->withHeaders($headers)->send('MKCOL', $transferUrl);
 
         if (!in_array($mkcol->status(), [201, 301, 302, 405], true)) {
+            Log::warning('[WebDAV] chunkedUpload: MKCOL a échoué', [
+                'status'      => $mkcol->status(),
+                'transferUrl' => $transferUrl,
+                'body'        => substr($mkcol->body(), 0, 300),
+            ]);
             return false;
         }
 
@@ -113,6 +132,13 @@ class BufferedWebDavAdapter extends WebDAVAdapter
                 ->put($transferUrl . '/' . str_pad((string) $chunkNumber, 5, '0', STR_PAD_LEFT));
 
             if (!in_array($put->status(), [200, 201, 204], true)) {
+                Log::warning('[WebDAV] chunkedUpload: PUT chunk a échoué', [
+                    'status'      => $put->status(),
+                    'chunk'       => $chunkNumber,
+                    'total'       => $total,
+                    'transferUrl' => $transferUrl,
+                    'body'        => substr($put->body(), 0, 300),
+                ]);
                 $this->abortChunkedUpload($transferUrl);
                 return false;
             }
@@ -127,6 +153,12 @@ class BufferedWebDavAdapter extends WebDAVAdapter
             ->send('MOVE', $transferUrl . '/.file');
 
         if (!in_array($move->status(), [200, 201, 204], true)) {
+            Log::warning('[WebDAV] chunkedUpload: MOVE a échoué', [
+                'status'      => $move->status(),
+                'destination' => $destination,
+                'transferUrl' => $transferUrl,
+                'body'        => substr($move->body(), 0, 300),
+            ]);
             $this->abortChunkedUpload($transferUrl);
             return false;
         }
