@@ -795,20 +795,34 @@ GET /api/v1/esouscription/get-contrats
 Accept: application/json
 ```
 
-La liste est paginée (`per_page` vaut `15` par défaut). Les paramètres suivants permettent de filtrer par identifiant exact :
+La liste est paginée (`per_page` vaut `15` par défaut). Les paramètres suivants permettent de filtrer les contrats :
 
 | Paramètre | Type | Description |
 | --- | --- | --- |
 | `id_contrat` | entier | Identifiant du contrat |
 | `id_proposition` | entier | Identifiant de la proposition associée |
+| `uuid_contrat` | chaîne | UUID du contrat |
+| `agence_uuid` | chaîne | UUID de l'agence |
+| `code_produit` | chaîne | Code du produit |
+| `libelle_produit` | chaîne | Libellé du produit |
+| `code_proposition` | chaîne | Code de la proposition |
+| `numero_police` | chaîne | Numéro de police |
+| `partner_uuid` | chaîne | UUID du partenaire |
+| `conseiller_uuid` | chaîne | UUID du conseiller |
+| `mode_paiement` | chaîne | Mode de paiement |
+| `etape` | entier | Étape du contrat : `0` brouillon, `1` saisi, `2` en attente de validation, `3` validé/transmis, `4` rejeté/annulé |
+| `nom` | chaîne | Nom du souscripteur, recherche partielle |
+| `prenoms` | chaîne | Prénoms du souscripteur, recherche partielle |
+| `etat` | chaîne | `actif` pour les contrats non supprimés, `supprime` pour les contrats supprimés |
+| `per_page` | entier | Nombre d'éléments par page, entre `1` et `100` |
 
-Les deux paramètres peuvent être utilisés ensemble ; dans ce cas, les contrats doivent correspondre aux deux identifiants.
+Les paramètres peuvent être utilisés ensemble ; dans ce cas, les contrats doivent correspondre à tous les filtres renseignés.
 
 Exemple :
 
 ```bash
 curl --request GET \
-  --url 'http://localhost:8000/api/v1/esouscription/get-contrats?id_contrat=123&id_proposition=456&per_page=15' \
+  --url 'http://localhost:8000/api/v1/esouscription/get-contrats?id_contrat=123&id_proposition=456&etape=2&per_page=15' \
   --header 'Accept: application/json' \
   --header 'Authorization: ******'
 ```

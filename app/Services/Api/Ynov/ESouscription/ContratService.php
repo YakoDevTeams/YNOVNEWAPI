@@ -52,8 +52,8 @@ class ContratService
             });
         }
 
-        if (!empty($filters['etape'])) {
-            $query->where('etape', $filters['etape']);
+        if (array_key_exists('etape', $filters) && $filters['etape'] !== null && $filters['etape'] !== '') {
+            $query->where('etape', (int) $filters['etape']);
         }
 
         if (($filters['etat'] ?? null) === 'actif') {

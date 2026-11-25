@@ -496,7 +496,7 @@ class ProposititionController extends Controller
                     'agence_uuid'                   => $agenceUuid,
                     'code_produit'                  => $contratData['code_produit'] ?? null,
                     'libelle_produit'               => $contratData['libelle_produit'] ?? null,
-                    'etape'                         => $contratData['etape'] ?? null,
+                    'etape'                         => $contratData['etape'] ?? 1,
                     'formule_produit_code'          => $contratData['formule_produit_code'] ?? null,
                     'contact_personne_nom'          => $contratData['contact_personne_nom'] ?? null,
                     'contact_personne_mobile'       => $contratData['contact_personne_mobile'] ?? null,
