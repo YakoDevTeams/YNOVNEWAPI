@@ -107,6 +107,10 @@ Route::get('/api/documentation', function () {
     return view('documentation.index',);
 });
 
+Route::get('/documentation/partenaire/souscription', function () {
+    return response()->file(public_path('souscriptionDoc.html'));
+})->name('partners.souscriptions.documentation');
+
 // ============================================================
 // SIGNATURE ÉLECTRONIQUE - Widget Web dans web.php
 // ============================================================
