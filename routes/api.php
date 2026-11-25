@@ -38,6 +38,7 @@ use App\Http\Controllers\Api\Ynov\Prestation\PrestationController;
 use App\Http\Controllers\Api\Ynov\Prestation\PrestationDashboardController;
 use App\Http\Controllers\Api\Ynov\Prestation\PrestationRoutingController;
 use App\Http\Controllers\Api\Ynov\Prestation\PrestationTraitementController;
+use App\Http\Controllers\Api\Ynov\Public\ProposititionController as PartnerProposititionController;
 use App\Http\Controllers\Api\Ynov\ProduitController;
 use App\Http\Controllers\Api\Ynov\ProfileController;
 use App\Http\Controllers\Api\Ynov\Rdv\BordereauController;
@@ -1240,4 +1241,8 @@ Route::prefix('v1')->middleware([
             ->middleware('throttle:30,1');
 
     });
+
+    Route::post('partners/souscriptions', [PartnerProposititionController::class, 'storeApiSouscription'])
+        ->middleware('throttle:10,1')
+        ->name('partners.souscriptions.store');
 });

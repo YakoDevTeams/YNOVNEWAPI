@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation de l'API de création d'une souscription Yako Africa Assur.">
+    <title>API de création de souscription</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --yako-green: #1d603d;
+            --yako-green-dark: #0b482f;
+            --yako-gold: #e09518;
+            --yako-light: #f0f7f3;
+            --ink: #1f2c23;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            color: var(--ink);
+            background: #f4f8f5;
+            font-synthesis: none;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 48px 24px 36px;
+            color: #fff;
+            border-bottom: 5px solid var(--yako-gold);
+            background: linear-gradient(120deg, var(--yako-green-dark), var(--yako-green));
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
+        }
+
+        .brand-logo img {
+            display: block;
+            width: 184px;
+            max-width: 35vw;
+            height: auto;
+        }
+
+        .container {
+            width: min(100% - 32px, 980px);
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            margin: 0 0 8px;
+            color: #f7c56e;
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 5vw, 2.7rem);
+            line-height: 1.2;
+        }
+
+        .brand-copy > p:last-child {
+            max-width: 680px;
+            margin: 14px 0 0;
+            color: #e7f2eb;
+        }
+
+        main {
+            padding: 28px 0 56px;
+        }
+
+        section {
+            margin: 18px 0;
+            padding: 24px;
+            border: 1px solid #dfe9e2;
+            border-left: 4px solid var(--yako-green);
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 5px 18px rgb(23 32 51 / 4%);
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            color: var(--yako-green);
+            font-size: 1.2rem;
+        }
+
+        h3 {
+            margin: 22px 0 8px;
+            color: var(--yako-green-dark);
+            font-size: 1rem;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        .endpoint {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 14px 16px;
+            overflow-wrap: anywhere;
+            border: 1px solid #dce8df;
+            border-radius: 8px;
+            background: #f7faf7;
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+        .method {
+            padding: 3px 9px;
+            border-radius: 5px;
+            color: #fff;
+            background: var(--yako-green);
+            font-family: inherit;
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        .note {
+            padding: 12px 14px;
+            border-left: 4px solid var(--yako-gold);
+            border-radius: 4px;
+            background: #fff8e9;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .94rem;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e7ecf2;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--yako-green-dark);
+            background: var(--yako-light);
+        }
+
+        code {
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: var(--yako-green-dark);
+            background: #edf4ef;
+            font-family: Consolas, "Courier New", monospace;
+            overflow-wrap: anywhere;
+        }
+
+        pre {
+            margin: 10px 0 0;
+            padding: 18px;
+            overflow-x: auto;
+            border-radius: 8px;
+            color: #e8eef7;
+            background: #142033;
+            font: .86rem/1.55 Consolas, "Courier New", monospace;
+            tab-size: 2;
+        }
+
+        .muted {
+            color: #5e6b7e;
+        }
+
+        label {
+            display: block;
+            margin: 14px 0 6px;
+            font-weight: 650;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        input, textarea {
+            padding: 10px 12px;
+        }
+
+        textarea {
+            min-height: 340px;
+            font: .86rem/1.55 Consolas, "Courier New", monospace;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+            background: #fff;
+        }
+
+        button {
+            width: auto;
+            margin-top: 14px;
+            padding: 10px 16px;
+            border: 0;
+            color: #fff;
+            background: var(--yako-green);
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        button:hover:not(:disabled) {
+            background: var(--yako-green-dark);
+        }
+
+        button:disabled {
+            opacity: .65;
+            cursor: wait;
+        }
+
+        input:focus, textarea:focus, button:focus-visible {
+            outline: 3px solid rgb(224 149 24 / 35%);
+            outline-offset: 2px;
+        }
+
+        #test-result {
+            min-height: 3rem;
+        }
+
+        footer {
+            padding: 0 0 28px;
+            color: #617267;
+            font-size: .85rem;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 36px 0 28px;
+            }
+
+            .brand {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            section {
+                padding: 18px;
+            }
+
+            .endpoint {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="brand">
+                <a class="brand-logo" href="/" aria-label="Yako Africa Assurances Vie - accueil">
+                    <img src="/assets/images/logo.png" alt="Yako Africa Assurances Vie">
+                </a>
+                <div class="brand-copy">
+                    <p class="eyebrow">Documentation partenaire</p>
+                    <h1>Création d’une souscription</h1>
+                    <p>Cette page décrit l’endpoint de création de souscription et les données à lui transmettre.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>Endpoint</h2>
+            <p>Envoyez les informations du souscripteur, des assurés, des bénéficiaires et du contrat, avec les fichiers justificatifs obligatoires en multipart.</p>
+            <div class="endpoint">
+                <span class="method">POST</span>
+                <span>/api/v1/partners/souscriptions</span>
+            </div>
+            <p class="muted">Route partenaire authentifiée, limitée à 10 requêtes par minute.</p>
+        </section>
+
+        <section>
+            <h2>Connexion partenaire et jeton Bearer</h2>
+            <p>Connectez-vous avec votre compte partenaire. Le jeton retourné sera automatiquement ajouté au formulaire de test de souscription.</p>
+            <div class="endpoint">
+                <span class="method">POST</span>
+                <span>/api/v1/auth/login</span>
+            </div>
+            <p>Cette route de connexion reçoit du JSON (<code>Content-Type: application/json</code>).</p>
+            <p>Corps attendu :</p>
+            <pre>{
+  "login": "......@gmail.com",
+  "password": "",
+  "device_name": "Documentation"
+}</pre>
+            <form id="login-form">
+                <label for="login-name">Login</label>
+                <input id="login-name" name="login" type="text" autocomplete="username" placeholder="......@gmail.com" required>
+
+                <label for="login-password">Mot de passe</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+
+                <label for="login-device">Nom de l’appareil</label>
+                <input id="login-device" name="device_name" type="text" value="Documentation" required>
+
+                <button id="login-submit" type="submit">Se connecter et récupérer le Bearer</button>
+            </form>
+            <pre id="login-result" aria-live="polite">Aucune connexion effectuée.</pre>
+        </section>
+
+        <section>
+            <h2>Authentification et en-têtes</h2>
+            <p>Les requêtes de souscription nécessitent un jeton d’accès Bearer valide.</p>
+            <pre>Authorization: Bearer &lt;VOTRE_JETON&gt;
+Accept: application/json
+Content-Type: multipart/form-data; boundary=&lt;générée par le client&gt;</pre>
+            <p class="muted">Laissez le navigateur ou votre client HTTP générer automatiquement l’en-tête multipart et sa boundary. Ne définissez pas manuellement <code>Content-Type</code> lors de l’envoi des fichiers.</p>
+            <p class="note">Le mot de passe est envoyé uniquement à l’endpoint de connexion et n’est pas conservé par cette page. Utilisez cette documentation exclusivement en HTTPS. Si le compte exige une vérification 2FA ou un changement de mot de passe, la connexion ne fournira pas encore de jeton utilisable.</p>
+        </section>
+
+        <section>
+            <h2>Structure du payload</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Propriété</th>
+                            <th>Type</th>
+                            <th>Contenu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>adherentData</code></td>
+                            <td>Objet</td>
+                            <td>Informations personnelles du souscripteur principal.</td>
+                        </tr>
+                        <tr>
+                            <td><code>assurerDatas</code></td>
+                            <td>Tableau</td>
+                            <td>Assurés. Chaque élément contient <code>is_adherent</code>, <code>info</code> et <code>sante</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>BeneficiaireDatas</code></td>
+                            <td>Tableau</td>
+                            <td>Bénéficiaires. Respectez exactement cette casse. <code>is_adherent</code> vaut <code>oui</code> ou <code>non</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>documentDatas</code></td>
+                            <td>Tableau</td>
+                            <td>Fichiers justificatifs à rattacher au contrat. Leur absence ou un échec de stockage ne bloque pas la création, mais les pièces restent nécessaires au traitement.</td>
+                        </tr>
+                        <tr>
+                            <td><code>contratData</code></td>
+                            <td>Objet</td>
+                            <td>Informations commerciales, financières et de prise d’effet du contrat.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Modes de paiement</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Code à transmettre</th>
+                            <th>Signification</th>
+                            <th>Informations requises dans <code>contratData</code></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>VIR</code></td>
+                            <td>Virement bancaire.</td>
+                            <td>Les coordonnées bancaires sont obligatoires : <code>code_banque</code>, <code>code_guichet</code>, <code>numero_compte</code> et <code>rib</code>. <code>numecompte_complet</code> peut également être fourni si disponible.</td>
+                        </tr>
+                        <tr>
+                            <td><code>EBANK</code></td>
+                            <td>Mobile money ou paiement électronique.</td>
+                            <td>Indiquez <code>EBANK</code> comme mode de paiement.</td>
+                        </tr>
+                        <tr>
+                            <td><code>SOlde</code></td>
+                            <td>Prélèvement sur la solde d’un fonctionnaire.</td>
+                            <td>La référence MECANO ou le matricule est obligatoire dans <code>autre_ref_prelev</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>ADF</code></td>
+                            <td>Le partenaire encaisse la cotisation, puis reverse les fonds à Yako Africa.</td>
+                            <td>Indiquez <code>ADF</code> comme mode de paiement.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Code de périodicité</h3>
+            <p><code>contratData.code_periodicite</code> attend l’indice suivant :</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Code</th><th>Périodicité</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>M</code></td><td>Mensuelle</td></tr>
+                        <tr><td><code>T</code></td><td>Trimestrielle</td></tr>
+                        <tr><td><code>A</code></td><td>Annuelle</td></tr>
+                        <tr><td><code>S</code></td><td>Semestrielle</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Références produit et formule</h3>
+            <p>Les valeurs de <code>code_produit</code>, <code>libelle_produit</code> et <code>formule_produit_code</code> seront communiquées ultérieurement selon la convention avec Yako Africa. N’inventez pas ces valeurs ; renseignez-les lorsque votre interlocuteur vous les aura fournies.</p>
+
+            <h3>Exemple de données JSON</h3>
+            <pre id="sample-payload">{
+  "adherentData": {
+    "civilite": "M",
+    "genre": 1,
+    "nom": "DIOP",
+    "prenoms": "Ali",
+    "date_naissance": "1990-05-15",
+    "lieunaissance_code": "SN",
+    "email": "ali@example.com",
+    "mobile": "770000000",
+    "telephone": "221000000",
+    "numero_piece": "A123456",
+    "nni": "1234567890123",
+    "nature_piece": "CNI",
+    "situation_matrimoniale": "CELIBATAIRE",
+    "profession_code": "PROF-01",
+    "employeur": "Entreprise Exemple",
+    "lieuresidence_code": "DK",
+    "pays_code": "SN"
+  },
+  "assurerDatas": [
+    {
+      "is_adherent": "oui",
+      "info": {
+        "nom": "DIOP",
+        "prenoms": "Ali"
+      },
+      "sante": {
+        "taille": 175,
+        "poids": 70,
+        "tension_min": 10,
+        "tension_max": 13,
+        "tabagisme": "non",
+        "alcool": "non",
+        "sport": "oui",
+        "accident": "non",
+        "traitement": "non",
+        "transfusion_sanguine": "non",
+        "intervention_chirurgicale": "non",
+        "prochaine_intervention_chirurgicale": "non",
+        "diabete": "non",
+        "hypertension": "non",
+        "drepanocytose": "non",
+        "cirrhose_foie": "non",
+        "maladie_pulmonaire": "non",
+        "cancer": "non",
+        "anemie": "non",
+        "insuffisance_renale": "non",
+        "avc": "non"
+      }
+    },
+    {
+      "is_adherent": "non",
+      "info": {
+        "civilite": "Mme",
+        "genre": 2,
+        "nom": "FALL",
+        "prenoms": "Aminata",
+        "date_naissance": "1992-03-21",
+        "lieunaissance_code": "SN",
+        "email": "aminata@example.com",
+        "mobile": "771234567",
+        "telephone": "221771234567",
+        "numero_piece": "B987654",
+        "nni": "1992032100012",
+        "nature_piece": "CNI",
+        "situation_matrimoniale": "MARIEE",
+        "profession_code": "PROF-02",
+        "employeur": "Entreprise Exemple",
+        "lieuresidence_code": "TH",
+        "pays_code": "SN",
+        "filiation_uuid": "UUID_FILIATION"
+      },
+      "sante": {
+        "taille": 165,
+        "poids": 58,
+        "tension_min": 9,
+        "tension_max": 12,
+        "tabagisme": "non",
+        "alcool": "non",
+        "sport": "oui",
+        "accident": "non",
+        "traitement": "non",
+        "transfusion_sanguine": "non",
+        "intervention_chirurgicale": "non",
+        "prochaine_intervention_chirurgicale": "non",
+        "diabete": "non",
+        "hypertension": "non",
+        "drepanocytose": "non",
+        "cirrhose_foie": "non",
+        "maladie_pulmonaire": "non",
+        "cancer": "non",
+        "anemie": "non",
+        "insuffisance_renale": "non",
+        "avc": "non"
+      }
+    }
+  ],
+  "BeneficiaireDatas": [
+    {
+      "is_adherent": "oui",
+      "filiation_uuid": "UUID_FILIATION"
+    },
+    {
+      "is_adherent": "non",
+      "civilite": "Mme",
+      "genre": 2,
+      "nom": "FALL",
+      "prenoms": "Aminata",
+      "date_naissance": "1992-03-21",
+      "lieunaissance_code": "SN",
+      "email": "aminata@example.com",
+      "mobile": "771234567",
+      "telephone": "221771234567",
+      "numero_piece": "B987654",
+      "nni": "1992032100012",
+      "nature_piece": "CNI",
+      "situation_matrimoniale": "MARIEE",
+      "profession_code": "PROF-02",
+      "employeur": "Entreprise Exemple",
+      "lieuresidence_code": "TH",
+      "pays_code": "SN",
+      "filiation_uuid": "UUID_FILIATION"
+    }
+  ],
+  "documentDatas": [],
+  "contratData": {
+    "date_effet": "2026-10-06",
+    "mode_paiement": "ADF",
+    "organisme": "YAKO AFRICA",
+    "duree": 12,
+    "code_periodicite": "M",
+    "prime": 150000,
+    "prime_principale": 150000,
+    "sur_prime": 0,
+    "capital": 5000000,
+    "frais_adhesion": 2500
+  }
+}</pre>
+            <p class="note"><strong>Cas présentés :</strong> le souscripteur Ali est l’assuré 1 et le bénéficiaire 1 (<code>is_adherent: "oui"</code>). Aminata est un autre assuré et un autre bénéficiaire (<code>is_adherent: "non"</code>) : ses renseignements personnels complets sont fournis dans chaque section. Si le souscripteur n’est pas assuré ou bénéficiaire, ne l’ajoutez pas comme tel ; fournissez les renseignements des personnes réellement concernées.</p>
+            <p class="note"><strong>À retenir :</strong> les données personnelles de l’adhérent sont transmises dans <code>adherentData</code>. Pour chaque assuré, les données de santé sont dans <code>sante</code>. Les identifiants <code>partner_uuid</code>, <code>conseiller_uuid</code> et <code>agence_uuid</code> ne doivent pas être envoyés par le partenaire : le serveur les déduit du compte authentifié. Le partenaire vient de <code>users.partner_uuid</code>, le conseiller est l’UUID de l’utilisateur connecté, et l’agence est son agence principale active. Un compte sans partenaire ou agence principale active ne peut pas créer de souscription.</p>
+            <p class="muted">L’exemple JSON présente les données métier. Pour l’appel réel avec les pièces jointes, le corps de la requête est envoyé en <code>multipart/form-data</code> ; la page de test convertit le JSON en champs multipart et ajoute les fichiers sélectionnés.</p>
+
+            <h3>Pièces justificatives</h3>
+            <p>Pour le traitement du contrat, la pièce d’identité doit être fournie en deux fichiers distincts : le recto et le verso. Envoyez-les dans <code>documentDatas</code> avec un libellé explicite pour chaque côté. Leur absence ou un échec de stockage n’empêche pas la création de la souscription ; la réponse le signale dans <code>documentWarning</code>. Les fichiers sont envoyés en binaire via <code>multipart/form-data</code>, pas encodés en base64 dans le JSON.</p>
+            <pre>documentDatas[0][libelle] = "Pièce d’identité - recto"
+documentDatas[0][file]    = fichier binaire du recto
+documentDatas[1][libelle] = "Pièce d’identité - verso"
+documentDatas[1][file]    = fichier binaire du verso</pre>
+            <p class="muted">Extensions acceptées par le service : PDF, DOC/DOCX, XLS/XLSX, CSV, PPT/PPTX, JPG/JPEG, PNG, GIF, WEBP, ZIP, RAR et TXT. Dans les clients HTTP, les noms de champs doivent conserver la notation avec crochets ci-dessus.</p>
+        </section>
+
+        <section>
+            <h2>Tester l’endpoint</h2>
+            <p class="note"><strong>Attention :</strong> une requête réussie crée réellement une souscription. Utilisez un environnement de test et un payload adapté. Les fichiers recto et verso sont facultatifs à la création, mais nécessaires au traitement du contrat.</p>
+            <form id="api-test-form">
+                <label for="api-token">Jeton Bearer</label>
+                <input id="api-token" type="password" autocomplete="off" placeholder="Collez votre jeton d’accès" required>
+                <button id="copy-token" type="button">Copier le Bearer</button>
+
+                <label for="document-recto">Pièce d’identité - recto</label>
+                <input id="document-recto" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.webp,.zip,.rar,.txt">
+
+                <label for="document-verso">Pièce d’identité - verso</label>
+                <input id="document-verso" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.webp,.zip,.rar,.txt">
+
+                <label for="api-payload">Corps JSON</label>
+                <textarea id="api-payload" spellcheck="false" required></textarea>
+
+                <button id="submit-test" type="submit">Envoyer la requête</button>
+            </form>
+            <h3>Résultat</h3>
+            <pre id="test-result" aria-live="polite">Aucune requête envoyée.</pre>
+        </section>
+
+        <section>
+            <h2>Transmettre le contrat à Yako Africa</h2>
+            <p>Après la saisie et la création, le contrat doit être transmis à Yako Africa pour traitement. Reprenez l’UUID <code>contratData.uuid_contrat</code> de la réponse à la création, puis appelez cette route avec le même Bearer.</p>
+            <div class="endpoint">
+                <span class="method">POST</span>
+                <span>/api/v1/esouscription/transmettre-contrat/{uuid}</span>
+            </div>
+            <p>Remplacez <code>{uuid}</code> par l’UUID du contrat. Aucun corps JSON n’est requis. La réponse confirme la transmission et retourne le contrat mis à jour.</p>
+            <form id="transmit-form">
+                <label for="transmit-uuid">UUID du contrat à transmettre</label>
+                <input id="transmit-uuid" type="text" placeholder="UUID_DU_CONTRAT" required>
+                <button id="transmit-submit" type="submit">Transmettre à Yako Africa</button>
+            </form>
+            <pre id="transmit-result" aria-live="polite">Créez d’abord le contrat pour récupérer son UUID.</pre>
+            <h3>Exemple cURL</h3>
+            <pre>curl --request POST \
+  --url 'https://&lt;HOTE_API&gt;/api/v1/esouscription/transmettre-contrat/&lt;UUID_DU_CONTRAT&gt;' \
+  --header 'Authorization: Bearer &lt;VOTRE_JETON&gt;' \
+  --header 'Accept: application/json'</pre>
+        </section>
+
+        <section>
+            <h2>Exemple d’appel cURL</h2>
+            <p class="muted">Les fichiers justificatifs imposent un envoi multipart. Représentez les objets et tableaux JSON avec des noms de champs PHP entre crochets, comme dans l’extrait ci-dessous ; ajoutez de la même façon les autres champs de votre payload. N’ajoutez pas vous-même l’en-tête Content-Type, cURL génère la boundary multipart.</p>
+            <pre>curl --request POST \
+  --url 'https://&lt;HOTE_API&gt;/api/v1/partners/souscriptions' \
+  --header 'Authorization: Bearer &lt;VOTRE_JETON&gt;' \
+  --header 'Accept: application/json' \
+  --form 'adherentData[nom]=DIOP' \
+  --form 'contratData[mode_paiement]=ADF' \
+  --form 'contratData[code_periodicite]=M' \
+  --form 'documentDatas[0][libelle]=Pièce d’identité - recto' \
+  --form 'documentDatas[0][file]=@piece-recto.jpg' \
+  --form 'documentDatas[1][libelle]=Pièce d’identité - verso' \
+  --form 'documentDatas[1][file]=@piece-verso.jpg'</pre>
+        </section>
+
+        <section>
+            <h2>Réponse</h2>
+            <p>La réponse contient le contrat créé et le résultat de l’enregistrement des documents. Si les fichiers sont absents ou si leur stockage échoue, <code>documentStore</code> est vide et <code>documentWarning</code> explique que la souscription a été créée sans pièces jointes.</p>
+            <pre>{
+  "success": true,
+  "message": "Souscription créée avec succès",
+  "code": 200,
+  "contratData": {
+    "uuid_contrat": "UUID_DU_CONTRAT"
+  },
+  "documentStore": [
+    {"document": {"uuid_document": "UUID_DOC_RECTO", "libelle": "Pièce d’identité - recto"}},
+    {"document": {"uuid_document": "UUID_DOC_VERSO", "libelle": "Pièce d’identité - verso"}}
+  ],
+  "documentWarning": null
+}</pre>
+            <p class="muted"><code>documentStore</code> contient le résultat d’enregistrement de chaque fichier transmis. Une erreur de stockage est journalisée et retournée sous forme de <code>documentWarning</code>, sans annuler la souscription. Les autres erreurs de création continuent, elles, à faire échouer la transaction.</p>
+        </section>
+    </main>
+
+    <footer class="container">Documentation de l’endpoint de création de souscription</footer>
+    <script>
+        const samplePayload = document.getElementById('sample-payload').textContent;
+        document.getElementById('api-payload').value = JSON.stringify(JSON.parse(samplePayload), null, 2);
+
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const result = document.getElementById('login-result');
+            const submit = document.getElementById('login-submit');
+            const credentials = {
+                login: document.getElementById('login-name').value.trim(),
+                password: document.getElementById('login-password').value,
+                device_name: document.getElementById('login-device').value.trim()
+            };
+
+            submit.disabled = true;
+            result.textContent = 'Connexion en cours…';
+
+            try {
+                const response = await fetch('/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(credentials)
+                });
+                const body = await response.json();
+                const accessToken = body && body.data && body.data.access_token;
+
+                if (!response.ok || !accessToken) {
+                    result.textContent = 'HTTP ' + response.status + '\n' + JSON.stringify({
+                        code: body.code || null,
+                        message: body.message || 'Connexion impossible ou jeton non disponible.',
+                        errors: body.errors || null
+                    }, null, 2);
+                    return;
+                }
+
+                document.getElementById('api-token').value = accessToken;
+                result.textContent = 'Connexion réussie. Le Bearer a été ajouté au formulaire de test.';
+            } catch (error) {
+                result.textContent = 'Échec de la connexion : ' + error.message;
+            } finally {
+                document.getElementById('login-password').value = '';
+                submit.disabled = false;
+            }
+        });
+
+        document.getElementById('copy-token').addEventListener('click', async () => {
+            const token = document.getElementById('api-token').value;
+            const result = document.getElementById('login-result');
+
+            if (!token) {
+                result.textContent = 'Connectez-vous pour récupérer un Bearer avant de le copier.';
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(token);
+                result.textContent = 'Bearer copié dans le presse-papiers.';
+            } catch (error) {
+                result.textContent = 'Copie impossible dans ce navigateur. Sélectionnez le champ Bearer pour le copier manuellement.';
+            }
+        });
+
+        document.getElementById('api-test-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const token = document.getElementById('api-token').value.trim();
+            const result = document.getElementById('test-result');
+            const submit = document.getElementById('submit-test');
+            let payload;
+
+            try {
+                payload = JSON.parse(document.getElementById('api-payload').value);
+            } catch (error) {
+                result.textContent = 'JSON invalide : ' + error.message;
+                return;
+            }
+
+            if (!window.confirm('Cette requête peut créer une souscription réelle. Continuer ?')) {
+                return;
+            }
+
+            submit.disabled = true;
+            result.textContent = 'Envoi en cours…';
+
+            try {
+                const formData = new FormData();
+                const appendFormData = (key, value) => {
+                    if (value === null || value === undefined) {
+                        return;
+                    }
+
+                    if (Array.isArray(value)) {
+                        value.forEach((item, index) => appendFormData(key + '[' + index + ']', item));
+                        return;
+                    }
+
+                    if (typeof value === 'object') {
+                        Object.entries(value).forEach(([name, item]) => {
+                            appendFormData(key ? key + '[' + name + ']' : name, item);
+                        });
+                        return;
+                    }
+
+                    formData.append(key, String(value));
+                };
+                Object.entries(payload).forEach(([key, value]) => {
+                    if (key !== 'documentDatas') {
+                        appendFormData(key, value);
+                    }
+                });
+                const recto = document.getElementById('document-recto').files[0];
+                if (recto) {
+                    formData.append('documentDatas[0][file]', recto);
+                    formData.append('documentDatas[0][libelle]', 'Pièce d’identité - recto');
+                }
+                const verso = document.getElementById('document-verso').files[0];
+                if (verso) {
+                    formData.append('documentDatas[1][file]', verso);
+                    formData.append('documentDatas[1][libelle]', 'Pièce d’identité - verso');
+                }
+
+                const response = await fetch('/api/v1/partners/souscriptions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+                const responseBody = await response.text();
+
+                try {
+                    const body = JSON.parse(responseBody);
+                    result.textContent = 'HTTP ' + response.status + '\n' + JSON.stringify(body, null, 2);
+                    if (response.ok && body.contratData && body.contratData.uuid_contrat) {
+                        document.getElementById('transmit-uuid').value = body.contratData.uuid_contrat;
+                        document.getElementById('transmit-result').textContent =
+                            'Contrat créé. Transmettez-le maintenant pour traitement par Yako Africa.';
+                    }
+                } catch (error) {
+                    result.textContent = 'HTTP ' + response.status + '\n' + responseBody;
+                }
+            } catch (error) {
+                result.textContent = 'Échec de la requête : ' + error.message;
+            } finally {
+                submit.disabled = false;
+            }
+        });
+
+        document.getElementById('transmit-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const token = document.getElementById('api-token').value.trim();
+            const uuid = document.getElementById('transmit-uuid').value.trim();
+            const result = document.getElementById('transmit-result');
+            const submit = document.getElementById('transmit-submit');
+
+            if (!token) {
+                result.textContent = 'Connectez-vous et récupérez un Bearer avant de transmettre le contrat.';
+                return;
+            }
+
+            submit.disabled = true;
+            result.textContent = 'Transmission en cours…';
+
+            try {
+                const response = await fetch(
+                    '/api/v1/esouscription/transmettre-contrat/' + encodeURIComponent(uuid),
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Accept': 'application/json'
+                        }
+                    }
+                );
+                const responseBody = await response.text();
+
+                try {
+                    result.textContent = 'HTTP ' + response.status + '\n' +
+                        JSON.stringify(JSON.parse(responseBody), null, 2);
+                } catch (error) {
+                    result.textContent = 'HTTP ' + response.status + '\n' + responseBody;
+                }
+            } catch (error) {
+                result.textContent = 'Échec de la transmission : ' + error.message;
+            } finally {
+                submit.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
