@@ -18,7 +18,7 @@ class ContratService
     {
         $query = Contrat::query();
 
-        foreach (['uuid_contrat','id_contrat', 'agence_uuid', 'code_produit', 'libelle_produit', 'code_proposition','id_proposition', 'numero_police', 'partner_uuid', 'conseiller_uuid', 'mode_paiement', 'etape'] as $field) {
+        foreach (['uuid_contrat','id_contrat', 'agence_uuid', 'code_produit', 'libelle_produit', 'code_proposition','id_proposition', 'numero_police', 'partner_uuid', 'conseiller_uuid', 'mode_paiement'] as $field) {
             if (!empty($filters[$field])) {
                 $query->where($field, $filters[$field]);
             }
@@ -38,14 +38,22 @@ class ContratService
             });
         }
 
-        if (!empty($filters['search'])) {
-            $search = $filters['search'];
-            $query->where(function ($q) use ($search) {
-                $q->where('uuid_contrat', 'like', '%' . $search . '%')
-                    ->orWhere('numero_police', 'like', '%' . $search . '%')
-                    ->orWhere('code_proposition', 'like', '%' . $search . '%')
-                    ->orWhere('libelle_produit', 'like', '%' . $search . '%');
+        if (!empty($filters['nom']) || !empty($filters['prenoms'])) {
+            $query->whereHas('contratActeurs', function (Builder $contratActeurQuery) use ($filters): void {
+                $contratActeurQuery
+                    ->where('type_acteur', 'ADH')
+                    ->whereHas('acteur', function (Builder $acteurQuery) use ($filters): void {
+                        foreach (['nom', 'prenoms'] as $field) {
+                            if (!empty($filters[$field])) {
+                                $acteurQuery->where($field, 'like', '%' . $filters[$field] . '%');
+                            }
+                        }
+                    });
             });
+        }
+
+        if (!empty($filters['etape'])) {
+            $query->where('etape', $filters['etape']);
         }
 
         if (($filters['etat'] ?? null) === 'actif') {
