@@ -15583,6 +15583,7 @@
                                     CapitalSouscrit: 15000000,
                                     TotalPrime: 5400000,
                                     NbreImpayes: 0,
+                                    TotalEnAttente: 0,
                                     produit: "PERFORMA Individuel",
                                     EtatAvancementCotisation: 42 + "En %",
                                 },
@@ -15679,6 +15680,7 @@
                                     CapitalSouscrit: 15000000,
                                     TotalPrime: 5400000,
                                     NbreImpayes: 0,
+                                    NbreEnAttente: 0,
                                     produit: "PERFORMA Individuel",
                                     EtatAvancementCotisation: "78.5",
                                     Periodicite: "Mensuel",
@@ -15899,6 +15901,176 @@
             },
 
             // ============================================================
+            // ESPACE CLIENT - ÉTAT DE COTISATION D'UN CONTRAT
+            // ============================================================
+            {
+                id: "customer-contrat-etat-cotisation",
+                module: "espaces_client",
+                name: "État de cotisation d'un contrat",
+                description:
+                    "Récupère l'état complet de cotisation d'un contrat : compteurs (émissions, encaissements, impayés, en attente), assuré(s), garanties par assuré, bénéficiaires, payeur de prime et le détail des primes réglées / non réglées / partiellement réglées. **Distinction impayé / en attente** : pour les modes ESP, CHK, EBANK et VRC, une facture non réglée n'est impayée que si sa date de facture dépasse 30 jours — sinon `EnAttenteReglement` est vrai. Chaque facture de `PrimeNonRegles` expose `EstImpaye` et `EnAttenteReglement`.",
+                method: "GET",
+                path: "/espaces-client/contrat-etat-cotisation/{contrat_id}",
+                isProtected: true,
+                headers: {
+                    Authorization: "Bearer {token}",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        contrat_id: {
+                            type: "integer",
+                            required: true,
+                            description:
+                                "ID du contrat (identifiant numérique)",
+                        },
+                    },
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description:
+                            "État de cotisation récupéré avec succès",
+                        example: {
+                            success: true,
+                            code: "GET_ALL_CONTRAT_SUCCESS",
+                            message:
+                                "Etats de contisation du contrats recuperer avec successe.",
+                            data: {
+                                details: {
+                                    IdProposition: "3593104",
+                                    NumBulletin: "IND-DOI_2304_009849",
+                                    NumPolice: "DOIHOO202503754",
+                                    CodeProposition:
+                                        "202509251829150319459",
+                                    CapitalSouscrit: 1000000,
+                                    TotalPrime: 10400,
+                                    NbreImpayes: 0,
+                                    NbreEnAttente: 1,
+                                    NbreEmission: 10,
+                                    NbreEncaissment: 10,
+                                    NbrencPartielle: 0,
+                                    TotalEncaissement: 104000,
+                                    TotalEncaissementPartielle: 0,
+                                    TotalImpayes: 0,
+                                    TotalEnAttente: 7500,
+                                    produit: "DOIHOO",
+                                    EtatAvancementCotisation: 10.42,
+                                    DureeCotisationAns: 8,
+                                    Periodicite: "Mensuelle",
+                                    ModePaiement: "Société",
+                                    DateFinAdhesion: "31/10/2033",
+                                    DateEffetAdhesion: "01/11/2025",
+                                    Conseiller: "2014050031P-YAPO",
+                                    Adherent:
+                                        "YAPO BRUCE BERNADIN EVRARD JUNIOR",
+                                    Status: "En cours",
+                                },
+                                Assures: [
+                                    {
+                                        CodePersonne: "2025012108505846",
+                                        Nom: "YAPO",
+                                        Prenoms: "BRUCE BERNADIN EVRARD JUNIOR",
+                                        NomComplet:
+                                            "YAPO BRUCE BERNADIN EVRARD JUNIOR",
+                                        DateNaissance: "20/11/2000",
+                                        LieuNaissance: "Grand-Lahou",
+                                        Profession: "Informaticien(ne)",
+                                        CodeFiliation: "LUIMM",
+                                        Filiation: "Lui même",
+                                    },
+                                ],
+                                AssuresGaranties: [
+                                    {
+                                        NomPrenom:
+                                            "YAPO BRUCE BERNADIN EVRARD JUNIOR",
+                                        CodeGarantie: "DOI_2020",
+                                        Libelle: "DOIHOO",
+                                        Capital: 1000000,
+                                        Prime: 100,
+                                        PrimePrincipale: "100.0000",
+                                        FraisAccessoires: 0,
+                                        DateEffet: "01/11/2025",
+                                        DateEcheance: "31/10/2033",
+                                        DureeCouvAns: 8,
+                                        DureePrimeAns: 8,
+                                        Periodicite: "M",
+                                    },
+                                ],
+                                Beneficiaires: [
+                                    {
+                                        CodePersonne: "2025012108505846",
+                                        Nom: "YAPO",
+                                        Prenoms: "BRUCE BERNADIN EVRARD JUNIOR",
+                                        NomComplet:
+                                            "YAPO BRUCE BERNADIN EVRARD JUNIOR",
+                                        Filiation: "Lui même",
+                                    },
+                                ],
+                                PayeurPrime: [
+                                    {
+                                        CodePersonne: "2025012108505846",
+                                        NomPrenom:
+                                            "YAPO BRUCE BERNADIN EVRARD JUNIOR",
+                                        ModePaiement: "SOCIETE",
+                                        Organisme:
+                                            "YAKO AFRICA ASSURANCE VIE",
+                                        NumCompte: "163",
+                                    },
+                                ],
+                                PrimeNonRegles: [
+                                    {
+                                        CodePresentation:
+                                            "_____SOC11/2025-81",
+                                        IdPresentation: "31680334",
+                                        MaDate: "30/11/2025",
+                                        MontantNet: "7500.0000",
+                                        RegltMontant: ".0000",
+                                        RegltDate: null,
+                                        Etat: "1",
+                                        TypePresentation: "F",
+                                        EstImpaye: false,
+                                        EnAttenteReglement: true,
+                                    },
+                                ],
+                                PrimeRegles: [
+                                    {
+                                        CodePresentation:
+                                            "_____SOC08/2026-87",
+                                        IdPresentation: "33122832",
+                                        MaDate: "31/08/2026",
+                                        MontantNet: "10400.0000",
+                                        RegltMontant: "10400.0000",
+                                        RegltDate: "31/08/2026",
+                                        Etat: "2",
+                                        TypePresentation: "N",
+                                    },
+                                ],
+                                PrimeReglesPartielle: [],
+                            },
+                        },
+                    },
+                    {
+                        status: 422,
+                        description: "Contrat introuvable ou non supporté",
+                        example: {
+                            success: false,
+                            code: "CONTRACT_NOT_FOUND",
+                            message: "Impossible de recuperer les informations de ce contrat pour le moment.",
+                        },
+                    },
+                    {
+                        status: 401,
+                        description: "Non authentifié",
+                        example: {
+                            success: false,
+                            message: "Non authentifié.",
+                        },
+                    },
+                ],
+            },
+
+            // ============================================================
             // ESPACE CLIENT - CONTRATS AVEC FACTURES IMPRIMÉES
             // ============================================================
             {
@@ -15906,7 +16078,7 @@
                 module: "espaces_client",
                 name: "Contrats avec factures impayées",
                 description:
-                    "Récupère la liste des contrats du client qui ont des factures impayés. Retourne les informations des contrats avec le détail des factures non réglées. **Possibilité de filtrer par période (aujourd'hui, semaine, mois, année, personnalisé) et de rechercher par produit ou numéro de contrat.**",
+                    "Récupère la liste des contrats du client qui ont des factures non réglées. Retourne les informations des contrats avec le détail des factures. **Distinction impayé / en attente** : pour les modes de paiement ESP, CHK, EBANK et VRC, une facture n'est considérée impayée que si sa date de facture (MaDate) dépasse 30 jours — sinon elle est en attente de règlement. Chaque facture expose `EstImpaye` et `EnAttenteReglement`. Les autres modes de paiement sont impayés immédiatement. **Possibilité de filtrer par période (aujourd'hui, semaine, mois, année, personnalisé) et de rechercher par produit ou numéro de contrat.**",
                 method: "GET",
                 path: "/espaces-client/contrats-factures",
                 isProtected: true,
@@ -15995,7 +16167,9 @@
                                         CapitalSouscrit: 1000000,
                                         TotalPrime: 10400,
                                         NbreImpayes: 1,
+                                        NbreEnAttente: 0,
                                         TotalImpayes: 7500,
+                                        TotalEnAttente: 0,
                                         produit: "DOIHOO",
                                         Status: "En cours",
                                     },
@@ -16008,6 +16182,8 @@
                                             TypeFacture: "F",
                                             TypeFactureLibelle:
                                                 "Frais d'adhésion",
+                                            EstImpaye: true,
+                                            EnAttenteReglement: false,
                                         },
                                     ],
                                 },

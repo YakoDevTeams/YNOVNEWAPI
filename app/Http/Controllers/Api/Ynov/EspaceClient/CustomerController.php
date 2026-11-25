@@ -101,6 +101,8 @@ class CustomerController extends Controller
                         'CapitalSouscrit' => $detail['CapitalSouscrit'] ?? 0,
                         'TotalPrime' => $detail['TotalPrime'] ?? 0,
                         'NbreImpayes' => $detail['NbreImpayes'] ?? 0,
+                        // 'NbreEnAttente' => $detail['NbreEnAttente'] ?? 0,
+                        'TotalEnAttente' => $detail['TotalEnAttente'] ?? 0,
                         'produit' => ($reseauProduct && isset($reseauProduct->display_name)) ? $reseauProduct->display_name : $detail['produit'] ?? $userContrat->libelle_produit ?? 'Non défini',
                         'codeProduit' => $detail['codeProduit'] ?? $userContrat->code_produit ?? 'Non défini',
                         'EtatAvancementCotisation' => $detail['EtatAvancementCotisation'] ?? null,
@@ -228,6 +230,8 @@ class CustomerController extends Controller
                     'CapitalSouscrit' => $detail['CapitalSouscrit'] ?? 0,
                     'TotalPrime' => $detail['TotalPrime'] ?? 0,
                     'NbreImpayes' => $detail['NbreImpayes'] ?? 0,
+                    'NbreEnAttente' => $detail['NbreEnAttente'] ?? 0,
+                    // 'TotalEnAttente' => $detail['TotalEnAttente'] ?? 0,
                     'produit' => ($reseauProduct && isset($reseauProduct->display_name)) ? $reseauProduct->display_name : $detail['produit'] ?? 'Non défini',
                     'codeProduit' => $detail['codeProduit'] ?? null,
                     'EtatAvancementCotisation' => $detail['EtatAvancementCotisation'] ?? null,
@@ -378,6 +382,8 @@ class CustomerController extends Controller
                     'TotalEncaissement' => $detail['TotalEncaissement'] ?? 0,
                     'TotalEncaissementPartielle' => $detail['TotalEncaissementPartielle'] ?? 0,
                     'TotalImpayes' => $detail['TotalImpayes'] ?? 0,
+                    'NbreEnAttente' => $detail['NbreEnAttente'] ?? 0,
+                    'TotalEnAttente' => $detail['TotalEnAttente'] ?? 0,
 
                     'produit' =>  ($reseauProduct && isset($reseauProduct->display_name)) ? $reseauProduct->display_name : $detail['produit'] ?? 'Non défini',
                     'EtatAvancementCotisation' => $detail['EtatAvancementCotisation'] ?? null,
@@ -589,7 +595,7 @@ class CustomerController extends Controller
             $user = $request->user()->load('userContrats');
 
             if ($user->userContrats->isEmpty()) {
-                $this->clearUnpaidNotifications($user);
+                $this->clearUnpaidNotifications($user, ['impayee', 'en_attente']);
                 
                 return response()->json([
                     'success' => true,
@@ -616,6 +622,10 @@ class CustomerController extends Controller
             $totalImpayes = 0;
             $totalFactures = 0;
             $totalContrats = 0;
+            $hasPendingInvoices = false;
+            $totalEnAttente = 0;
+            $totalFacturesEnAttente = 0;
+            $totalContratsEnAttente = 0;
 
             foreach ($user->userContrats as $userContrat) {
                 try {
@@ -680,6 +690,8 @@ class CustomerController extends Controller
                                 'MontantARegler' => (float) ($PrimeNonRegle['MontantNet'] ?? 0),
                                 'TypeFacture' => $typeFacture,
                                 'TypeFactureLibelle' => $this->getTypeFactureLibelle($typeFacture),
+                                'EstImpaye' => (bool) ($PrimeNonRegle['EstImpaye'] ?? true),
+                                'EnAttenteReglement' => (bool) ($PrimeNonRegle['EnAttenteReglement'] ?? false),
                             ];
                         })
                         ->filter(function ($facture) use ($period, $dateFrom, $dateTo) {
@@ -720,19 +732,35 @@ class CustomerController extends Controller
                         continue;
                     }
 
-                    // ✅ Mettre à jour les compteurs globaux
-                    $hasUnpaidInvoices = true;
-                    $totalImpayes += array_sum(array_column($PrimeNonRegles, 'MontantARegler'));
-                    $totalFactures += count($PrimeNonRegles);
-                    $totalContrats++;
+                    // Distinguer factures réellement impayées et en attente de règlement
+                    $facturesImpayees = array_filter($PrimeNonRegles, fn ($f) => $f['EstImpaye']);
+                    $facturesEnAttente = array_filter($PrimeNonRegles, fn ($f) => !$f['EstImpaye']);
+
+                    // ✅ Mettre à jour les compteurs globaux (impayés réels uniquement)
+                    if (!empty($facturesImpayees)) {
+                        $hasUnpaidInvoices = true;
+                        $totalImpayes += array_sum(array_column($facturesImpayees, 'MontantARegler'));
+                        $totalFactures += count($facturesImpayees);
+                        $totalContrats++;
+                    }
+
+                    // Factures en attente de règlement (< 30 jours, modes ESP/CHK/EBANK/VRC)
+                    if (!empty($facturesEnAttente)) {
+                        $hasPendingInvoices = true;
+                        $totalEnAttente += array_sum(array_column($facturesEnAttente, 'MontantARegler'));
+                        $totalFacturesEnAttente += count($facturesEnAttente);
+                        $totalContratsEnAttente++;
+                    }
 
                     $contratData = [
                         'details' => [
                             'IdProposition' => $detail['IdProposition'] ?? null,
                             'CapitalSouscrit' => $detail['CapitalSouscrit'] ?? 0,
                             'TotalPrime' => $detail['TotalPrime'] ?? 0,
-                            'NbreImpayes' => count($PrimeNonRegles),
-                            'TotalImpayes' => array_sum(array_column($PrimeNonRegles, 'MontantARegler')),
+                            'NbreImpayes' => count($facturesImpayees),
+                            'NbreEnAttente' => count($facturesEnAttente),
+                            'TotalImpayes' => array_sum(array_column($facturesImpayees, 'MontantARegler')),
+                            'TotalEnAttente' => array_sum(array_column($facturesEnAttente, 'MontantARegler')),
                             'produit' =>  ($reseauProduct && isset($reseauProduct->display_name)) ? $reseauProduct->display_name : $detail['produit'] ?? $userContrat->libelle_produit ?? 'Non défini',
                             'codeProduit' => $detail['codeProduit'] ?? $userContrat->code_produit ?? 'Non défini',
                             'Status' => $this->getContractStatus($detail)
@@ -750,14 +778,19 @@ class CustomerController extends Controller
             }
 
             // ============================================================
-            // GESTION DES NOTIFICATIONS D'IMPAYÉS
+            // GESTION DES NOTIFICATIONS D'IMPAYÉS / EN ATTENTE
             // ============================================================
-            
+
             if ($hasUnpaidInvoices) {
-                // ✅ Passer les données calculées à la notification
                 $this->createOrUpdateUnpaidNotification($user, $allContrats, $totalImpayes, $totalFactures, $totalContrats);
             } else {
-                $this->clearUnpaidNotifications($user);
+                $this->clearUnpaidNotifications($user, ['impayee']);
+            }
+
+            if ($hasPendingInvoices) {
+                $this->createOrUpdatePendingNotification($user, $allContrats, $totalEnAttente, $totalFacturesEnAttente, $totalContratsEnAttente);
+            } else {
+                $this->clearUnpaidNotifications($user, ['en_attente']);
             }
 
             // ============================================================
@@ -834,7 +867,6 @@ class CustomerController extends Controller
 
         $existingNotification = Notification::where('user_uuid', $user->uuid_user)
             ->where('type', 'impayee')
-            // ->whereNull('read_at')
             ->first();
 
         $title = '⚠️ ' . $totalFactures . ' facture' . ($totalFactures > 1 ? 's' : '') . ' impayée' . ($totalFactures > 1 ? 's' : '');
@@ -878,12 +910,70 @@ class CustomerController extends Controller
     }
 
     /**
-     * Marquer comme lues les notifications d'impayés
+     * Créer ou mettre à jour la notification d'information
+     * pour les factures en attente de règlement.
+     * Rappel limité à une notification tous les 5 jours.
      */
-    private function clearUnpaidNotifications($user): void
+    private function createOrUpdatePendingNotification($user, array $contrats, float $totalEnAttente, int $totalFacturesEnAttente, int $totalContratsEnAttente): void
+    {
+        $paiementsGroup = GroupNotif::where('code', 'paiements')->first();
+
+        $existingNotification = Notification::where('user_uuid', $user->uuid_user)
+            ->where('type', 'en_attente')
+            ->first();
+
+        // Rappel au plus une fois tous les 5 jours
+        if ($existingNotification && $existingNotification->updated_at?->gt(now()->subDays(5))) {
+            return;
+        }
+
+        $title = 'ℹ️ ' . $totalFacturesEnAttente . ' facture' . ($totalFacturesEnAttente > 1 ? 's' : '') . ' en attente de règlement';
+        $body = 'Vous avez ' . $totalFacturesEnAttente . ' facture' . ($totalFacturesEnAttente > 1 ? 's' : '') . ' en attente de règlement sur ' . $totalContratsEnAttente . ' contrat' . ($totalContratsEnAttente > 1 ? 's' : '') . '. Montant total : ' . number_format($totalEnAttente, 0, ',', ' ') . ' F CFA.';
+
+        $metadata = [
+            'total_en_attente' => $totalEnAttente,
+            'total_contrats' => $totalContratsEnAttente,
+            'total_factures' => $totalFacturesEnAttente,
+            'contrats' => array_map(function ($contrat) {
+                return [
+                    'id' => $contrat['details']['IdProposition'] ?? null,
+                    'produit' => $contrat['details']['produit'] ?? null,
+                    'nbre_en_attente' => $contrat['details']['NbreEnAttente'] ?? 0,
+                    'total_en_attente' => $contrat['details']['TotalEnAttente'] ?? 0,
+                ];
+            }, $contrats),
+            'updated_at' => now()->toISOString(),
+        ];
+
+        if ($existingNotification) {
+            $existingNotification->update([
+                'title' => $title,
+                'body' => $body,
+                'read_at' => null,
+                'metadata' => $metadata,
+                'updated_at' => now(),
+            ]);
+        } else {
+            $this->notificationService->create([
+                'user_uuid' => $user->uuid_user,
+                'group_notif_uuid' => $paiementsGroup?->uuid_group_notif,
+                'title' => $title,
+                'body' => $body,
+                'type' => 'en_attente',
+                'metadata' => $metadata,
+                'channel' => 'database',
+                'created_by' => null,
+            ]);
+        }
+    }
+
+    /**
+     * Marquer comme lues les notifications impayés / en attente
+     */
+    private function clearUnpaidNotifications($user, array $types = ['impayee']): void
     {
         Notification::where('user_uuid', $user->uuid_user)
-            ->where('type', 'impayees')
+            ->whereIn('type', $types)
             ->whereNull('read_at')
             ->update([
                 'read_at' => now(),

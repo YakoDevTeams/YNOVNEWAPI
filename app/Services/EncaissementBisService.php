@@ -100,26 +100,73 @@ class EncaissementBisService
         $data['details'][0]['TotalEncaissementPartielle'] = $TotalEncaissementPartielle;
         
 
-        // Recupérer le nombre de primes impayées ou en attente
-        $NbreImpayes = count($data['enc']['nonRegle'] ?? []);
+        // Modes de paiement pour lesquels une facture non réglée
+        // n'est "impayée" qu'après 30 jours (sinon : en attente de règlement)
+        $modesAvecDelaiImpayes = ['ESP', 'CHK', 'EBANK', 'VRC'];
+        $delaiImpayesJours = 30;
+        $modePaiement = strtoupper(trim((string) ($data['details'][0]['CodeModePaiement'] ?? '')));
 
-        $NbreImpayesNormal = count(array_filter($data['enc']['nonRegle'] ?? [], function ($item) {
+        $estImpayee = function ($item) use ($modePaiement, $modesAvecDelaiImpayes, $delaiImpayesJours) {
+            // Autres modes : impayé immédiat
+            if (!in_array($modePaiement, $modesAvecDelaiImpayes, true)) {
+                return true;
+            }
+
+            // ESP/CHK/EBANK/VRC : impayé seulement si MaDate > 30 jours
+            $maDate = $item['MaDate'] ?? null;
+
+            if (!$maDate) {
+                return true;
+            }
+
+            try {
+                $dateFacture = Carbon::createFromFormat('d/m/Y', $maDate);
+            } catch (\Throwable) {
+                return true;
+            }
+
+            return $dateFacture->copy()->addDays($delaiImpayesJours)->isPast();
+        };
+
+        $nonRegle = $data['enc']['nonRegle'] ?? [];
+        $impayes  = array_filter($nonRegle, $estImpayee);
+        $enAttente = array_diff_key($nonRegle, $impayes);
+
+        // Annoter chaque facture non réglée pour distinguer impayé / en attente
+        foreach ($nonRegle as $i => $item) {
+            $nonRegle[$i]['EstImpaye'] = $estImpayee($item);
+            $nonRegle[$i]['EnAttenteReglement'] = !$nonRegle[$i]['EstImpaye'];
+        }
+
+        $data['enc']['nonRegle'] = $nonRegle;
+
+        // Recupérer le nombre de primes impayées ou en attente
+        $NbreImpayes = count($impayes);
+        $NbreEnAttente = count($enAttente);
+
+        $NbreImpayesNormal = count(array_filter($nonRegle, function ($item) {
             return ($item['TypePresentation'] ?? null) === 'N';
         }));
 
         // Recupérer le montant total des primes impayées ou en attente
         $TotalImpayes = array_sum(array_map(function ($item) {
             return isset($item['MontantNet']) ? (float) $item['MontantNet'] : 0;
-        }, $data['enc']['nonRegle'] ?? []));
+        }, $impayes));
+
+        $TotalEnAttente = array_sum(array_map(function ($item) {
+            return isset($item['MontantNet']) ? (float) $item['MontantNet'] : 0;
+        }, $enAttente));
 
         $TotalImpayesNormal = array_sum(array_map(function ($item) {
             return ($item['TypePresentation'] ?? null) === 'N'
                 ? (float) ($item['MontantNet'] ?? 0)
                 : 0;
-        }, $data['enc']['nonRegle'] ?? []));
+        }, $nonRegle));
 
         $data['details'][0]['NbreImpayes'] = $NbreImpayes;
+        $data['details'][0]['NbreEnAttente'] = $NbreEnAttente;
         $data['details'][0]['TotalImpayes'] = $TotalImpayes;
+        $data['details'][0]['TotalEnAttente'] = $TotalEnAttente;
        
 
         // Mettre le type de la primes en float
