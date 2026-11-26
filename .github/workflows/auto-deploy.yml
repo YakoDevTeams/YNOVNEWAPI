@@ -12,8 +12,8 @@ on:
       - testdeploy
       - devdeploy
 
-# permissions:
-#   contents: read
+permissions:
+  contents: read
 
 concurrency:
   group: laravel-deploy-${{ github.ref }}
@@ -76,6 +76,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
+          timeout: 120000
           local-dir: ./
           server-dir: ${{ steps.target.outputs.server_dir }}
           dangerous-clean-slate: false
