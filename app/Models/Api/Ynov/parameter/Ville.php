@@ -26,4 +26,9 @@ class Ville extends Model
     {
         static::creating(fn (self $ville) => $ville->uuid_ville ??= (string) Str::uuid());
     }
+
+    public function pays()
+    {
+        return $this->belongsTo(Pays::class, 'MonPays', 'codePays');
+    }
 }

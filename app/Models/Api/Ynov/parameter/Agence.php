@@ -110,6 +110,11 @@ class Agence extends Model
         ])->withTimestamps();
     }
 
+    public function ville(): BelongsTo
+    {
+        return $this->belongsTo(Ville::class, 'ville', 'codeVille');
+    }
+
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'uuid_user');

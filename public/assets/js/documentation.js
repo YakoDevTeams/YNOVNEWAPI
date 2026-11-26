@@ -3015,7 +3015,7 @@
                 module: "souscription",
                 name: "Lister les villes",
                 description:
-                    "Récupère les villes triées par libellé avec pagination. La recherche porte sur le code, le libellé et le pays.",
+                    "Récupère les villes triées par libellé avec pagination. La recherche porte sur le code, le libellé et le pays (code ou libellé). Chaque ville inclut l'objet pays associé.",
                 method: "GET",
                 path: "/param/villes",
                 isProtected: true,
@@ -3055,9 +3055,88 @@
                             code: "VILLES_LISTED",
                             data: {
                                 current_page: 1,
-                                data: [],
+                                data: [
+                                    {
+                                        uuid_ville:
+                                            "af01c86d-c4d1-455c-901a-66b653698000",
+                                        codeVille: "CIV-00001",
+                                        MonLibelle: "ABABIEN",
+                                        MonPays: "CIV",
+                                        pays: {
+                                            uuid_pays:
+                                                "9b2c1f4e-7a3d-4e5f-8b6c-1d2e3f4a5b6c",
+                                            codePays: "CIV",
+                                            MonLibelle:
+                                                "COTE D'IVOIRE",
+                                            Indicatif: "+225",
+                                            Flag: "🇨🇮",
+                                            FlagUrl:
+                                                "https://flagcdn.com/ci.svg",
+                                        },
+                                    },
+                                ],
                                 per_page: 20,
-                                total: 0,
+                                total: 1,
+                            },
+                        },
+                    },
+                ],
+            },
+
+            {
+                id: "pays-list",
+                module: "souscription",
+                name: "Lister les pays",
+                description:
+                    "Récupère les pays triés par libellé avec pagination. La recherche porte sur le code ISO3, le libellé et l'indicatif téléphonique.",
+                method: "GET",
+                path: "/param/pays",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    query: {
+                        search: {
+                            type: "string",
+                            required: false,
+                            description:
+                                "Rechercher dans le code, le libellé ou l'indicatif",
+                        },
+                        per_page: {
+                            type: "integer",
+                            required: false,
+                            default: 20,
+                            description:
+                                "Nombre de résultats par page (entre 1 et 100)",
+                        },
+                    },
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Liste paginée des pays",
+                        example: {
+                            success: true,
+                            message: "Liste des pays récupérée.",
+                            code: "PAYS_LISTED",
+                            data: {
+                                current_page: 1,
+                                data: [
+                                    {
+                                        uuid_pays:
+                                            "9b2c1f4e-7a3d-4e5f-8b6c-1d2e3f4a5b6c",
+                                        codePays: "CIV",
+                                        MonLibelle: "COTE D'IVOIRE",
+                                        Indicatif: "+225",
+                                        Flag: "🇨🇮",
+                                        FlagUrl:
+                                            "https://flagcdn.com/ci.svg",
+                                    },
+                                ],
+                                per_page: 20,
+                                total: 1,
                             },
                         },
                     },

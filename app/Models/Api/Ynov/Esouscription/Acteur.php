@@ -3,6 +3,8 @@
 namespace App\Models\Api\Ynov\Esouscription;
 
 use App\Models\Api\Ynov\Esouscription\DeclarationSante;
+use App\Models\Api\Ynov\parameter\Pays;
+use App\Models\Api\Ynov\parameter\Ville;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -100,6 +102,21 @@ class Acteur extends Model
     public function sante()
     {
         return $this->hasOne(DeclarationSante::class, 'assure_uuid', 'uuid_acteur');
+    }
+
+    public function villeNaissance()
+    {
+        return $this->belongsTo(Ville::class, 'lieunaissance_code', 'codeVille');
+    }
+
+    public function villeResidence()
+    {
+        return $this->belongsTo(Ville::class, 'lieuresidence_code', 'codeVille');
+    }
+
+    public function pays()
+    {
+        return $this->belongsTo(Pays::class, 'pays_code', 'codePays');
     }
 
 

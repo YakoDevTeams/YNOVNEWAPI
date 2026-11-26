@@ -32,7 +32,7 @@ class AgenceService
                 'ville' => $data['ville'] ?? null,
                 'quartier' => $data['quartier'] ?? null,
                 'code_postal' => $data['code_postal'] ?? null,
-                'pays' => $data['pays'] ?? 'Côte d\'Ivoire',
+                'pays' => $data['pays'] ?? null,
                 'latitude' => $data['latitude'] ?? null,
                 'longitude' => $data['longitude'] ?? null,
                 'photo' => $data['photo'] ?? null,

@@ -102,7 +102,7 @@ class ActeurController extends Controller
             'nom' => 'nullable|string|max:100',
             'prenoms' => 'nullable|string|max:255',
             'date_naissance' => 'nullable|date',
-            'lieunaissance_code' => 'nullable|string|max:100',
+            'lieunaissance_code' => 'nullable|string|max:100|exists:villes,codeVille',
 
             'email' => 'nullable|email|max:260',
             'mobile' => 'nullable|string|max:20',
@@ -116,8 +116,8 @@ class ActeurController extends Controller
             'profession_code' => 'nullable|string|max:100',
             'employeur' => 'nullable|string|max:100',
 
-            'lieuresidence_code' => 'nullable|string|max:100',
-            'pays_code' => 'nullable|string|max:50',
+            'lieuresidence_code' => 'nullable|string|max:100|exists:villes,codeVille',
+            'pays_code' => 'nullable|string|max:50|exists:pays,codePays',
             'integration_key' => 'nullable|string|max:255',
             'created_by' => 'nullable|string|max:255',
         ]);
@@ -176,7 +176,7 @@ class ActeurController extends Controller
             'nom' => 'sometimes|nullable|string|max:100',
             'prenoms' => 'sometimes|nullable|string|max:255',
             'date_naissance' => 'sometimes|nullable|date',
-            'lieunaissance_code' => 'sometimes|nullable|string|max:100',
+            'lieunaissance_code' => 'sometimes|nullable|string|max:100|exists:villes,codeVille',
 
             'email' => 'sometimes|nullable|email|max:260',
             'mobile' => 'sometimes|nullable|string|max:20',
@@ -190,8 +190,8 @@ class ActeurController extends Controller
             'profession_code' => 'sometimes|nullable|string|max:100',
             'employeur' => 'sometimes|nullable|string|max:100',
 
-            'lieuresidence_code' => 'sometimes|nullable|string|max:100',
-            'pays_code' => 'sometimes|nullable|string|max:50',
+            'lieuresidence_code' => 'sometimes|nullable|string|max:100|exists:villes,codeVille',
+            'pays_code' => 'sometimes|nullable|string|max:50|exists:pays,codePays',
 
             'integration_key' => 'sometimes|nullable|string|max:255',
 

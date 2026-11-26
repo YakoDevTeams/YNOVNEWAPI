@@ -21,7 +21,11 @@ class VilleController extends Controller
             $query->where(function ($query) use ($search) {
                 $query->where('codeVille', 'LIKE', "%{$search}%")
                     ->orWhere('MonLibelle', 'LIKE', "%{$search}%")
-                    ->orWhere('MonPays', 'LIKE', "%{$search}%");
+                    ->orWhere('MonPays', 'LIKE', "%{$search}%")
+                    ->orWhereHas('pays', function ($q) use ($search) {
+                        $q->where('MonLibelle', 'LIKE', "%{$search}%")
+                            ->orWhere('codePays', 'LIKE', "%{$search}%");
+                    });
             });
         }
 
@@ -30,7 +34,7 @@ class VilleController extends Controller
         }
 
         $perPage = min(max($request->integer('per_page', 20), 1), 100);
-        $villes = $query->orderBy('MonLibelle')->paginate($perPage);
+        $villes = $query->with('pays')->orderBy('MonLibelle')->paginate($perPage);
 
         return response()->json([
             'success' => true,
@@ -46,7 +50,7 @@ class VilleController extends Controller
             
             'codeVille' => ['required', 'string', 'max:50', Rule::unique('villes', 'codeVille')],
             'MonLibelle' => ['required', 'string', 'max:255'],
-            'MonPays' => ['required', 'string', 'max:100'],
+            'MonPays' => ['required', 'string', 'max:10', 'exists:pays,codePays'],
         ]);
 
         $validated['uuid_ville'] = (string) Str::uuid();
@@ -96,7 +100,7 @@ class VilleController extends Controller
                 Rule::unique('villes', 'codeVille')->ignore($ville->uuid_ville, 'uuid_ville'),
             ],
             'MonLibelle' => ['sometimes', 'required', 'string', 'max:255'],
-            'MonPays' => ['sometimes', 'required', 'string', 'max:100'],
+            'MonPays' => ['sometimes', 'required', 'string', 'max:10', 'exists:pays,codePays'],
         ]);
 
         $ville->update($validated);

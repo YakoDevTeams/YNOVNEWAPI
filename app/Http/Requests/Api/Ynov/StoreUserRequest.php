@@ -31,8 +31,10 @@ class StoreUserRequest extends FormRequest
             'genre' => ['nullable', 'in:M,F'],
             'civilite' => ['nullable', 'string', 'max:20'],
             'date_naissance' => ['nullable', 'date'],
-            'lieu_naissance' => ['nullable', 'string', 'max:55'],
-            'lieu_residence' => ['nullable', 'string', 'max:255'],
+            'lieu_naissance' => ['nullable', 'string', 'max:55', 'exists:villes,codeVille'],
+            'lieu_residence' => ['nullable', 'string', 'max:255', 'exists:villes,codeVille'],
+            'ville' => ['nullable', 'string', 'max:100', 'exists:villes,codeVille'],
+            'pays' => ['nullable', 'string', 'max:10', 'exists:pays,codePays'],
             'photo' => ['nullable', 'image', 'max:2048'],
         ];
     }

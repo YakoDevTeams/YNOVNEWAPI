@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Import progressif des référentiels géographiques (1000 lignes / exécution)
+        $schedule->command('geo:import')->everyThreeMinutes()->withoutOverlapping();
     }
 
     /**

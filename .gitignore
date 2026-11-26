@@ -8,6 +8,7 @@
 /vendorOld
 /front-end-apimain_test
 /APIMAINYNOV
+/ynovmigration
 .env
 .env.testing
 .htaccess

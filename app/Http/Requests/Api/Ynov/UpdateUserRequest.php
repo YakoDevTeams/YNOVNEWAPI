@@ -34,11 +34,11 @@ class UpdateUserRequest extends FormRequest
             'mobile_2' => ['nullable', 'string', 'max:25'],
             'email_pro' => ['nullable', 'email', 'max:255'],
             'date_naissance' => ['nullable', 'date'],
-            'lieu_naissance' => ['nullable', 'string', 'max:255'],
+            'lieu_naissance' => ['nullable', 'string', 'max:255', 'exists:villes,codeVille'],
             'genre' => ['nullable', Rule::in(['M', 'F'])],
             'civilite' => ['nullable', Rule::in(['M.', 'Mme', 'Mlle'])],
-            'ville' => ['nullable', 'string', 'max:100'],
-            'pays' => ['nullable', 'string', 'max:100'],
+            'ville' => ['nullable', 'string', 'max:100', 'exists:villes,codeVille'],
+            'pays' => ['nullable', 'string', 'max:10', 'exists:pays,codePays'],
         ];
     }
 

@@ -90,6 +90,16 @@ class UserDetails extends Model
         return $this->belongsTo(Ville::class, 'lieu_naissance', 'codeVille');
     }
 
+    public function userVille(): BelongsTo
+    {
+        return $this->belongsTo(Ville::class, 'ville', 'codeVille');
+    }
+
+    public function userPays(): BelongsTo
+    {
+        return $this->belongsTo(Pays::class, 'pays', 'codePays');
+    }
+
     /**
      * Setter pour photo_path
      */

@@ -7,6 +7,7 @@ use App\Models\Api\Ynov\parameter\MotifTraitement;
 use App\Models\Api\Ynov\parameter\Partner;
 use App\Models\Api\Ynov\parameter\TypePrestation;
 use App\Models\Api\Ynov\parameter\User;
+use App\Models\Api\Ynov\parameter\Ville;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -118,6 +119,10 @@ class Prestation extends Model
     public function traiterPar()
     {
         return $this->belongsTo(User::class, 'traiter_par', 'uuid_user');
+    }
+    public function villeDeclaration()
+    {
+        return $this->belongsTo(Ville::class, 'ville_declaration_uuid', 'uuid_ville');
     }
 
     public function documents()

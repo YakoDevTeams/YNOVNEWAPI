@@ -1,0 +1,245 @@
+code_pays,indicatif,flag,flag_url,lib_pays
+AFG,+93,🇦🇫,https://flagcdn.com/af.svg,AFGHANISTAN
+ZAF,+27,🇿🇦,https://flagcdn.com/za.svg,"AFRIQUE DU SUD"
+ALB,+355,🇦🇱,https://flagcdn.com/al.svg,ALBANIE
+DZA,+213,🇩🇿,https://flagcdn.com/dz.svg,ALGERIE
+DEU,+49,🇩🇪,https://flagcdn.com/de.svg,ALLEMAGNE
+AND,+376,🇦🇩,https://flagcdn.com/ad.svg,ANDORRE
+AGO,+244,🇦🇴,https://flagcdn.com/ao.svg,ANGOLA
+AIA,+1,🇦🇮,https://flagcdn.com/ai.svg,ANGUILLA
+ATG,+1,🇦🇬,https://flagcdn.com/ag.svg,ANTIGUA-ET-BARBUDA
+SAU,+966,🇸🇦,https://flagcdn.com/sa.svg,"ARABIE SAOUDITE"
+ARG,+54,🇦🇷,https://flagcdn.com/ar.svg,ARGENTINE
+ARM,+374,🇦🇲,https://flagcdn.com/am.svg,ARMENIE
+ABW,+297,🇦🇼,https://flagcdn.com/aw.svg,ARUBA
+AUS,+61,🇦🇺,https://flagcdn.com/au.svg,AUSTRALIE
+AUT,+43,🇦🇹,https://flagcdn.com/at.svg,AUTRICHE
+AZE,+994,🇦🇿,https://flagcdn.com/az.svg,AZERBAIDJAN
+BHS,+1,🇧🇸,https://flagcdn.com/bs.svg,BAHAMAS
+BHR,+973,🇧🇭,https://flagcdn.com/bh.svg,BAHREIN
+BGD,+880,🇧🇩,https://flagcdn.com/bd.svg,BANGLADESH
+BRB,+1,🇧🇧,https://flagcdn.com/bb.svg,BARBADE
+BEL,+32,🇧🇪,https://flagcdn.com/be.svg,BELGIQUE
+BLZ,+501,🇧🇿,https://flagcdn.com/bz.svg,BELIZE
+BMU,+1,🇧🇲,https://flagcdn.com/bm.svg,BERMUDES
+BTN,+975,🇧🇹,https://flagcdn.com/bt.svg,BHOUTAN
+BLR,+375,🇧🇾,https://flagcdn.com/by.svg,BIELORUSSIE
+BOL,+591,🇧🇴,https://flagcdn.com/bo.svg,BOLIVIE
+BIH,+387,🇧🇦,https://flagcdn.com/ba.svg,BOSNIE-HERZEGOVINE
+BWA,+267,🇧🇼,https://flagcdn.com/bw.svg,BOTSWANA
+BRN,+673,🇧🇳,https://flagcdn.com/bn.svg,BRUNEI
+BRA,+55,🇧🇷,https://flagcdn.com/br.svg,BRESIL
+BGR,+359,🇧🇬,https://flagcdn.com/bg.svg,BULGARIE
+BFA,+226,🇧🇫,https://flagcdn.com/bf.svg,"BURKINA FASO"
+BDI,+257,🇧🇮,https://flagcdn.com/bi.svg,BURUNDI
+BEN,+229,🇧🇯,https://flagcdn.com/bj.svg,BENIN
+KHM,+855,🇰🇭,https://flagcdn.com/kh.svg,CAMBODGE
+CMR,+237,🇨🇲,https://flagcdn.com/cm.svg,CAMEROUN
+CAN,+1,🇨🇦,https://flagcdn.com/ca.svg,CANADA
+CPV,+238,🇨🇻,https://flagcdn.com/cv.svg,CAP-VERT
+CHL,+56,🇨🇱,https://flagcdn.com/cl.svg,CHILI
+CHN,+86,🇨🇳,https://flagcdn.com/cn.svg,CHINE
+CYP,+357,🇨🇾,https://flagcdn.com/cy.svg,CHYPRE
+COL,+57,🇨🇴,https://flagcdn.com/co.svg,COLOMBIE
+COM,+269,🇰🇲,https://flagcdn.com/km.svg,COMORES
+COG,+242,🇨🇬,https://flagcdn.com/cg.svg,CONGO-BRAZZAVILLE
+COD,+243,🇨🇩,https://flagcdn.com/cd.svg,CONGO-KINSHASA
+PRK,+850,🇰🇵,https://flagcdn.com/kp.svg,"COREE DU NORD"
+KOR,+82,🇰🇷,https://flagcdn.com/kr.svg,"COREE DU SUD"
+CRI,+506,🇨🇷,https://flagcdn.com/cr.svg,"COSTA RICA"
+HRV,+385,🇭🇷,https://flagcdn.com/hr.svg,CROATIE
+CUB,+53,🇨🇺,https://flagcdn.com/cu.svg,CUBA
+CUW,+599,🇨🇼,https://flagcdn.com/cw.svg,CURACAO
+CIV,+225,🇨🇮,https://flagcdn.com/ci.svg,"COTE D’IVOIRE"
+DNK,+45,🇩🇰,https://flagcdn.com/dk.svg,DANEMARK
+DJI,+253,🇩🇯,https://flagcdn.com/dj.svg,DJIBOUTI
+DMA,+1,🇩🇲,https://flagcdn.com/dm.svg,DOMINIQUE
+ESP,+34,🇪🇸,https://flagcdn.com/es.svg,ESPAGNE
+EST,+372,🇪🇪,https://flagcdn.com/ee.svg,ESTONIE
+SWZ,+268,🇸🇿,https://flagcdn.com/sz.svg,ESWATINI
+FJI,+679,🇫🇯,https://flagcdn.com/fj.svg,FIDJI
+FIN,+358,🇫🇮,https://flagcdn.com/fi.svg,FINLANDE
+FRA,+33,🇫🇷,https://flagcdn.com/fr.svg,FRANCE
+GAB,+241,🇬🇦,https://flagcdn.com/ga.svg,GABON
+GMB,+220,🇬🇲,https://flagcdn.com/gm.svg,GAMBIE
+GHA,+233,🇬🇭,https://flagcdn.com/gh.svg,GHANA
+GIB,+350,🇬🇮,https://flagcdn.com/gi.svg,GIBRALTAR
+GRD,+1,🇬🇩,https://flagcdn.com/gd.svg,GRENADE
+GRL,+299,🇬🇱,https://flagcdn.com/gl.svg,GROENLAND
+GRC,+30,🇬🇷,https://flagcdn.com/gr.svg,GRECE
+GLP,+590,🇬🇵,https://flagcdn.com/gp.svg,GUADELOUPE
+GUM,+1,🇬🇺,https://flagcdn.com/gu.svg,GUAM
+GTM,+502,🇬🇹,https://flagcdn.com/gt.svg,GUATEMALA
+GGY,+44,🇬🇬,https://flagcdn.com/gg.svg,GUERNESEY
+GIN,+224,🇬🇳,https://flagcdn.com/gn.svg,GUINEE
+GNQ,+240,🇬🇶,https://flagcdn.com/gq.svg,"GUINEE EQUATORIALE"
+GNB,+245,🇬🇼,https://flagcdn.com/gw.svg,GUINEE-BISSAU
+GUY,+592,🇬🇾,https://flagcdn.com/gy.svg,GUYANA
+GUF,+594,🇬🇫,https://flagcdn.com/gf.svg,"GUYANE FRANCAISE"
+GEO,+995,🇬🇪,https://flagcdn.com/ge.svg,GEORGIE
+HTI,+509,🇭🇹,https://flagcdn.com/ht.svg,HAITI
+HND,+504,🇭🇳,https://flagcdn.com/hn.svg,HONDURAS
+HUN,+36,🇭🇺,https://flagcdn.com/hu.svg,HONGRIE
+IND,+91,🇮🇳,https://flagcdn.com/in.svg,INDE
+IDN,+62,🇮🇩,https://flagcdn.com/id.svg,INDONESIE
+IRQ,+964,🇮🇶,https://flagcdn.com/iq.svg,IRAK
+IRN,+98,🇮🇷,https://flagcdn.com/ir.svg,IRAN
+IRL,+353,🇮🇪,https://flagcdn.com/ie.svg,IRLANDE
+ISL,+354,🇮🇸,https://flagcdn.com/is.svg,ISLANDE
+ISR,+972,🇮🇱,https://flagcdn.com/il.svg,ISRAEL
+ITA,+39,🇮🇹,https://flagcdn.com/it.svg,ITALIE
+JAM,+1,🇯🇲,https://flagcdn.com/jm.svg,JAMAIQUE
+JPN,+81,🇯🇵,https://flagcdn.com/jp.svg,JAPON
+JEY,+44,🇯🇪,https://flagcdn.com/je.svg,JERSEY
+JOR,+962,🇯🇴,https://flagcdn.com/jo.svg,JORDANIE
+KAZ,+7,🇰🇿,https://flagcdn.com/kz.svg,KAZAKHSTAN
+KEN,+254,🇰🇪,https://flagcdn.com/ke.svg,KENYA
+KGZ,+996,🇰🇬,https://flagcdn.com/kg.svg,KIRGHIZSTAN
+KIR,+686,🇰🇮,https://flagcdn.com/ki.svg,KIRIBATI
+XKX,+383,🇽🇰,https://flagcdn.com/xk.svg,KOSOVO
+KWT,+965,🇰🇼,https://flagcdn.com/kw.svg,KOWEIT
+REU,+262,🇷🇪,https://flagcdn.com/re.svg,"LA REUNION"
+LAO,+856,🇱🇦,https://flagcdn.com/la.svg,LAOS
+LSO,+266,🇱🇸,https://flagcdn.com/ls.svg,LESOTHO
+LVA,+371,🇱🇻,https://flagcdn.com/lv.svg,LETTONIE
+LBN,+961,🇱🇧,https://flagcdn.com/lb.svg,LIBAN
+LBR,+231,🇱🇷,https://flagcdn.com/lr.svg,LIBERIA
+LBY,+218,🇱🇾,https://flagcdn.com/ly.svg,LIBYE
+LIE,+423,🇱🇮,https://flagcdn.com/li.svg,LIECHTENSTEIN
+LTU,+370,🇱🇹,https://flagcdn.com/lt.svg,LITUANIE
+LUX,+352,🇱🇺,https://flagcdn.com/lu.svg,LUXEMBOURG
+MKD,+389,🇲🇰,https://flagcdn.com/mk.svg,"MACEDOINE DU NORD"
+MDG,+261,🇲🇬,https://flagcdn.com/mg.svg,MADAGASCAR
+MYS,+60,🇲🇾,https://flagcdn.com/my.svg,MALAISIE
+MWI,+265,🇲🇼,https://flagcdn.com/mw.svg,MALAWI
+MDV,+960,🇲🇻,https://flagcdn.com/mv.svg,MALDIVES
+MLI,+223,🇲🇱,https://flagcdn.com/ml.svg,MALI
+MLT,+356,🇲🇹,https://flagcdn.com/mt.svg,MALTE
+MAR,+212,🇲🇦,https://flagcdn.com/ma.svg,MAROC
+MTQ,+596,🇲🇶,https://flagcdn.com/mq.svg,MARTINIQUE
+MUS,+230,🇲🇺,https://flagcdn.com/mu.svg,MAURICE
+MRT,+222,🇲🇷,https://flagcdn.com/mr.svg,MAURITANIE
+MYT,+262,🇾🇹,https://flagcdn.com/yt.svg,MAYOTTE
+MEX,+52,🇲🇽,https://flagcdn.com/mx.svg,MEXIQUE
+FSM,+691,🇫🇲,https://flagcdn.com/fm.svg,MICRONESIE
+MDA,+373,🇲🇩,https://flagcdn.com/md.svg,MOLDAVIE
+MCO,+377,🇲🇨,https://flagcdn.com/mc.svg,MONACO
+MNG,+976,🇲🇳,https://flagcdn.com/mn.svg,MONGOLIE
+MSR,+1,🇲🇸,https://flagcdn.com/ms.svg,MONTSERRAT
+MNE,+382,🇲🇪,https://flagcdn.com/me.svg,MONTENEGRO
+MOZ,+258,🇲🇿,https://flagcdn.com/mz.svg,MOZAMBIQUE
+MMR,+95,🇲🇲,https://flagcdn.com/mm.svg,"MYANMAR (BIRMANIE)"
+NAM,+264,🇳🇦,https://flagcdn.com/na.svg,NAMIBIE
+NRU,+674,🇳🇷,https://flagcdn.com/nr.svg,NAURU
+NIC,+505,🇳🇮,https://flagcdn.com/ni.svg,NICARAGUA
+NER,+227,🇳🇪,https://flagcdn.com/ne.svg,NIGER
+NGA,+234,🇳🇬,https://flagcdn.com/ng.svg,NIGERIA
+NIU,+683,🇳🇺,https://flagcdn.com/nu.svg,NIUE
+NOR,+47,🇳🇴,https://flagcdn.com/no.svg,NORVEGE
+NCL,+687,🇳🇨,https://flagcdn.com/nc.svg,NOUVELLE-CALEDONIE
+NZL,+64,🇳🇿,https://flagcdn.com/nz.svg,NOUVELLE-ZELANDE
+NPL,+977,🇳🇵,https://flagcdn.com/np.svg,NEPAL
+OMN,+968,🇴🇲,https://flagcdn.com/om.svg,OMAN
+UGA,+256,🇺🇬,https://flagcdn.com/ug.svg,OUGANDA
+UZB,+998,🇺🇿,https://flagcdn.com/uz.svg,OUZBEKISTAN
+PAK,+92,🇵🇰,https://flagcdn.com/pk.svg,PAKISTAN
+PLW,+680,🇵🇼,https://flagcdn.com/pw.svg,PALAOS
+PAN,+507,🇵🇦,https://flagcdn.com/pa.svg,PANAMA
+PNG,+675,🇵🇬,https://flagcdn.com/pg.svg,PAPOUASIE-NOUVELLE-GUINEE
+PRY,+595,🇵🇾,https://flagcdn.com/py.svg,PARAGUAY
+NLD,+31,🇳🇱,https://flagcdn.com/nl.svg,PAYS-BAS
+BES,+599,🇧🇶,https://flagcdn.com/bq.svg,"PAYS-BAS CARIBEENS"
+PHL,+63,🇵🇭,https://flagcdn.com/ph.svg,PHILIPPINES
+POL,+48,🇵🇱,https://flagcdn.com/pl.svg,POLOGNE
+PYF,+689,🇵🇫,https://flagcdn.com/pf.svg,"POLYNESIE FRANCAISE"
+PRI,+1,🇵🇷,https://flagcdn.com/pr.svg,"PORTO RICO"
+PRT,+351,🇵🇹,https://flagcdn.com/pt.svg,PORTUGAL
+PER,+51,🇵🇪,https://flagcdn.com/pe.svg,PEROU
+QAT,+974,🇶🇦,https://flagcdn.com/qa.svg,QATAR
+HKG,+852,🇭🇰,https://flagcdn.com/hk.svg,"R.A.S. CHINOISE DE HONG KONG"
+MAC,+853,🇲🇴,https://flagcdn.com/mo.svg,"R.A.S. CHINOISE DE MACAO"
+ROU,+40,🇷🇴,https://flagcdn.com/ro.svg,ROUMANIE
+GBR,+44,🇬🇧,https://flagcdn.com/gb.svg,ROYAUME-UNI
+RUS,+7,🇷🇺,https://flagcdn.com/ru.svg,RUSSIE
+RWA,+250,🇷🇼,https://flagcdn.com/rw.svg,RWANDA
+CAF,+236,🇨🇫,https://flagcdn.com/cf.svg,"REPUBLIQUE CENTRAFRICAINE"
+DOM,+1,🇩🇴,https://flagcdn.com/do.svg,"REPUBLIQUE DOMINICAINE"
+ESH,+212,🇪🇭,https://flagcdn.com/eh.svg,"SAHARA OCCIDENTAL"
+BLM,+590,🇧🇱,https://flagcdn.com/bl.svg,SAINT-BARTHELEMY
+KNA,+1,🇰🇳,https://flagcdn.com/kn.svg,SAINT-CHRISTOPHE-ET-NIEVES
+SMR,+378,🇸🇲,https://flagcdn.com/sm.svg,SAINT-MARIN
+MAF,+590,🇲🇫,https://flagcdn.com/mf.svg,SAINT-MARTIN
+SXM,+1,🇸🇽,https://flagcdn.com/sx.svg,"SAINT-MARTIN (PARTIE NEERLANDAISE)"
+SPM,+508,🇵🇲,https://flagcdn.com/pm.svg,SAINT-PIERRE-ET-MIQUELON
+VCT,+1,🇻🇨,https://flagcdn.com/vc.svg,"SAINT-VINCENT-ET-LES GRENADINES"
+SHN,+290,🇸🇭,https://flagcdn.com/sh.svg,SAINTE-HELENE
+LCA,+1,🇱🇨,https://flagcdn.com/lc.svg,SAINTE-LUCIE
+SLV,+503,🇸🇻,https://flagcdn.com/sv.svg,SALVADOR
+WSM,+685,🇼🇸,https://flagcdn.com/ws.svg,SAMOA
+ASM,+1,🇦🇸,https://flagcdn.com/as.svg,"SAMOA AMERICAINES"
+STP,+239,🇸🇹,https://flagcdn.com/st.svg,"SAO TOME-ET-PRINCIPE"
+SRB,+381,🇷🇸,https://flagcdn.com/rs.svg,SERBIE
+SYC,+248,🇸🇨,https://flagcdn.com/sc.svg,SEYCHELLES
+SLE,+232,🇸🇱,https://flagcdn.com/sl.svg,"SIERRA LEONE"
+SGP,+65,🇸🇬,https://flagcdn.com/sg.svg,SINGAPOUR
+SVK,+421,🇸🇰,https://flagcdn.com/sk.svg,SLOVAQUIE
+SVN,+386,🇸🇮,https://flagcdn.com/si.svg,SLOVENIE
+SOM,+252,🇸🇴,https://flagcdn.com/so.svg,SOMALIE
+SDN,+249,🇸🇩,https://flagcdn.com/sd.svg,SOUDAN
+SSD,+211,🇸🇸,https://flagcdn.com/ss.svg,"SOUDAN DU SUD"
+LKA,+94,🇱🇰,https://flagcdn.com/lk.svg,"SRI LANKA"
+CHE,+41,🇨🇭,https://flagcdn.com/ch.svg,SUISSE
+SUR,+597,🇸🇷,https://flagcdn.com/sr.svg,SURINAME
+SWE,+46,🇸🇪,https://flagcdn.com/se.svg,SUEDE
+SJM,+47,🇸🇯,https://flagcdn.com/sj.svg,"SVALBARD ET JAN MAYEN"
+SYR,+963,🇸🇾,https://flagcdn.com/sy.svg,SYRIE
+SEN,+221,🇸🇳,https://flagcdn.com/sn.svg,SENEGAL
+TJK,+992,🇹🇯,https://flagcdn.com/tj.svg,TADJIKISTAN
+TZA,+255,🇹🇿,https://flagcdn.com/tz.svg,TANZANIE
+TWN,+886,🇹🇼,https://flagcdn.com/tw.svg,TAIWAN
+TCD,+235,🇹🇩,https://flagcdn.com/td.svg,TCHAD
+CZE,+420,🇨🇿,https://flagcdn.com/cz.svg,TCHEQUIE
+IOT,+246,🇮🇴,https://flagcdn.com/io.svg,"TERRITOIRE BRITANNIQUE DE L’OCEAN INDIEN"
+PSE,+970,🇵🇸,https://flagcdn.com/ps.svg,"TERRITOIRES PALESTINIENS"
+THA,+66,🇹🇭,https://flagcdn.com/th.svg,THAILANDE
+TLS,+670,🇹🇱,https://flagcdn.com/tl.svg,"TIMOR ORIENTAL"
+TGO,+228,🇹🇬,https://flagcdn.com/tg.svg,TOGO
+TKL,+690,🇹🇰,https://flagcdn.com/tk.svg,TOKELAU
+TON,+676,🇹🇴,https://flagcdn.com/to.svg,TONGA
+TTO,+1,🇹🇹,https://flagcdn.com/tt.svg,TRINITE-ET-TOBAGO
+TUN,+216,🇹🇳,https://flagcdn.com/tn.svg,TUNISIE
+TKM,+993,🇹🇲,https://flagcdn.com/tm.svg,TURKMENISTAN
+TUR,+90,🇹🇷,https://flagcdn.com/tr.svg,TURQUIE
+TUV,+688,🇹🇻,https://flagcdn.com/tv.svg,TUVALU
+UKR,+380,🇺🇦,https://flagcdn.com/ua.svg,UKRAINE
+URY,+598,🇺🇾,https://flagcdn.com/uy.svg,URUGUAY
+VUT,+678,🇻🇺,https://flagcdn.com/vu.svg,VANUATU
+VEN,+58,🇻🇪,https://flagcdn.com/ve.svg,VENEZUELA
+VNM,+84,🇻🇳,https://flagcdn.com/vn.svg,"VIET NAM"
+WLF,+681,🇼🇫,https://flagcdn.com/wf.svg,WALLIS-ET-FUTUNA
+YEM,+967,🇾🇪,https://flagcdn.com/ye.svg,YEMEN
+ZMB,+260,🇿🇲,https://flagcdn.com/zm.svg,ZAMBIE
+ZWE,+263,🇿🇼,https://flagcdn.com/zw.svg,ZIMBABWE
+EGY,+20,🇪🇬,https://flagcdn.com/eg.svg,EGYPTE
+ARE,+971,🇦🇪,https://flagcdn.com/ae.svg,"EMIRATS ARABES UNIS"
+ECU,+593,🇪🇨,https://flagcdn.com/ec.svg,EQUATEUR
+ERI,+291,🇪🇷,https://flagcdn.com/er.svg,ERYTHREE
+VAT,+39,🇻🇦,https://flagcdn.com/va.svg,"ETAT DE LA CITE DU VATICAN"
+USA,+1,🇺🇸,https://flagcdn.com/us.svg,ETATS-UNIS
+ETH,+251,🇪🇹,https://flagcdn.com/et.svg,ETHIOPIE
+CXR,+61,🇨🇽,https://flagcdn.com/cx.svg,"ILE CHRISTMAS"
+NFK,+672,🇳🇫,https://flagcdn.com/nf.svg,"ILE NORFOLK"
+IMN,+44,🇮🇲,https://flagcdn.com/im.svg,"ILE DE MAN"
+CYM,+1,🇰🇾,https://flagcdn.com/ky.svg,"ILES CAIMANS"
+CCK,+61,🇨🇨,https://flagcdn.com/cc.svg,"ILES COCOS"
+COK,+682,🇨🇰,https://flagcdn.com/ck.svg,"ILES COOK"
+FRO,+298,🇫🇴,https://flagcdn.com/fo.svg,"ILES FEROE"
+FLK,+500,🇫🇰,https://flagcdn.com/fk.svg,"ILES MALOUINES"
+MNP,+1,🇲🇵,https://flagcdn.com/mp.svg,"ILES MARIANNES DU NORD"
+MHL,+692,🇲🇭,https://flagcdn.com/mh.svg,"ILES MARSHALL"
+SLB,+677,🇸🇧,https://flagcdn.com/sb.svg,"ILES SALOMON"
+TCA,+1,🇹🇨,https://flagcdn.com/tc.svg,"ILES TURQUES-ET-CAIQUES"
+VGB,+1,🇻🇬,https://flagcdn.com/vg.svg,"ILES VIERGES BRITANNIQUES"
+VIR,+1,🇻🇮,https://flagcdn.com/vi.svg,"ILES VIERGES DES ETATS-UNIS"
+ALA,+358,🇦🇽,https://flagcdn.com/ax.svg,"ILES ALAND"
+XXX,,,,INCONNU

@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\Ynov\NotificationController;
 use App\Http\Controllers\Api\Ynov\OtpController;
 use App\Http\Controllers\Api\Ynov\Param\ProfessionController;
 use App\Http\Controllers\Api\Ynov\Param\BrancheController;
+use App\Http\Controllers\Api\Ynov\Param\PaysController;
 use App\Http\Controllers\Api\Ynov\Param\VilleController;
 use App\Http\Controllers\Api\Ynov\PartnerController;
 use App\Http\Controllers\Api\Ynov\PasswordController;
@@ -1139,6 +1140,14 @@ Route::prefix('v1')->middleware([
         Route::get('villes/{uuid_ville}', [VilleController::class, 'show']);
         Route::put('villes/{uuid_ville}', [VilleController::class, 'update']);
         Route::delete('villes/{uuid_ville}', [VilleController::class, 'destroy']);
+
+        // gestion des pays
+        Route::get('pays', [PaysController::class, 'indexPays']);
+        Route::post('pays', [PaysController::class, 'storePays']);
+        Route::get('pays/{uuid_pays}', [PaysController::class, 'show']);
+        Route::put('pays/{uuid_pays}', [PaysController::class, 'update']);
+        Route::delete('pays/{uuid_pays}', [PaysController::class, 'destroy']);
+        
         Route::get('get-villes-nsil', [ParamController::class, 'getNsilVilles']);
         Route::get('get-professions-nsil', [ParamController::class, 'getNsilProfession']); 
         Route::get('get-filiations', [ParamController::class, 'getFiliation']); 
