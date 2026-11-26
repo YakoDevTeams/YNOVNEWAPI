@@ -1,0 +1,115 @@
+name: Laravel API CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - testdeploy
+      - devdeploy
+  pull_request:
+    branches:
+      - main
+      - testdeploy
+      - devdeploy
+
+permissions:
+  contents: read
+
+concurrency:
+  group: laravel-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Select deployment directory
+        id: target
+        shell: bash
+        run: |
+          case "$GITHUB_REF_NAME" in
+            main)
+              echo "server_dir=./public_html/api.ynovservices.com/" >> "$GITHUB_OUTPUT"
+              ;;
+            testdeploy)
+              echo "server_dir=./public_html/apitest.ynovservices.com/" >> "$GITHUB_OUTPUT"
+              ;;
+            devdeploy)
+              echo "server_dir=./public_html/apidev.ynovservices.com/" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "Unsupported deployment branch: $GITHUB_REF_NAME" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          tools: composer
+
+      - name: Install production dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./
+          server-dir: ${{ steps.target.outputs.server_dir }}
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/tests/**
+            **/storage/**
+            **/public/storage/**
+            **/.env*
+            **/auth.json
+            **/phpunit.xml
+            **/.phpunit.result.cache
+
+      - name: Send deployment email
+        if: always()
+        uses: dawidd6/action-send-mail@v6
+        with:
+          server_address: ${{ secrets.MAIL_HOST }}
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "${{ job.status == 'success' && 'SUCCESS' || 'ECHEC' }} - YNOV API ${{ github.ref_name }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: YNOV API CI/CD <${{ secrets.MAIL_FROM }}>
+          html_body: |
+            <h2>Déploiement YNOV API</h2>
+            <p><strong>Environnement :</strong> ${{ github.ref_name == 'main' && 'PRODUCTION' || github.ref_name == 'testdeploy' && 'TEST' || 'DEVELOPMENT' }}</p>
+            <p><strong>Branche :</strong> ${{ github.ref_name }}</p>
+            <p><strong>Statut :</strong> ${{ job.status }}</p>
+            <p><strong>Déclenché par :</strong> ${{ github.actor }}</p>
+            <p><strong>Commit :</strong> ${{ github.sha }}</p>
+            <p><strong>Projet :</strong> ${{ github.repository }}</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">Consulter les détails du déploiement</a></p>
