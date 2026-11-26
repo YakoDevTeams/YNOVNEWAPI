@@ -16,6 +16,11 @@ class ContratController extends Controller
 
     public function index(Request $request)
     {
+        $request->validate([
+            'etape' => ['sometimes', 'nullable', 'integer', 'in:0,1,2,3,4'],
+            'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
+        ]);
+
         try {
             $contrats = $this->contratService->getAll(
                 $request->only([
