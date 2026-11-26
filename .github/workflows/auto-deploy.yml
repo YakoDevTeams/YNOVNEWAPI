@@ -54,12 +54,12 @@ jobs:
           tools: composer
 
       - name: Install production dependencies
-        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+        run: composer update --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install frontend dependencies
