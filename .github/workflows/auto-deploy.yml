@@ -12,8 +12,8 @@ on:
       - testdeploy
       - devdeploy
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
 
 concurrency:
   group: laravel-deploy-${{ github.ref }}
