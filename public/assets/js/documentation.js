@@ -20,6 +20,7 @@
     // ================================================================
     // 1. CONFIGURATION DES ENVIRONNEMENTS
     // ================================================================
+    const hostedApiUrl = `${window.location.origin}/api/v1`;
     const API_DATA = {
         environments: {
             local: {
@@ -27,15 +28,15 @@
                 label: "Local",
             },
             dev: {
-                url: "https://apidev.yakoafricassur.com/api/v1",
+                url: hostedApiUrl,
                 label: "Development",
             },
             test: {
-                url: "https://apidev.yakoafricassur.com/api/v1",
+                url: hostedApiUrl,
                 label: "Test",
             },
             staging: {
-                url: "https://apidev.yakoafricassur.com/api/v1",
+                url: hostedApiUrl,
                 label: "Staging",
             },
             production: {
@@ -43,6 +44,24 @@
                 label: "Production",
                 protected: true,
             },
+
+            // dev: {
+            //     url: "https://apidev.yakoafricassur.com/api/v1",
+            //     label: "Development",
+            // },
+            // test: {
+            //     url: "https://apidev.yakoafricassur.com/api/v1",
+            //     label: "Test",
+            // },
+            // staging: {
+            //     url: "https://apidev.yakoafricassur.com/api/v1",
+            //     label: "Staging",
+            // },
+            // production: {
+            //     url: "https://api.ynov.ci/api/v1",
+            //     label: "Production",
+            //     protected: true,
+            // },
         },
 
         // ================================================================
