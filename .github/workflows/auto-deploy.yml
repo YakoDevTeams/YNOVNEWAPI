@@ -81,12 +81,10 @@ jobs:
           server-dir: ${{ steps.target.outputs.server_dir }}
           dangerous-clean-slate: false
           exclude: |
-            **/.git*
-            **/.git*/**
+            **/.git/**
             **/.github/**
             **/node_modules/**
             **/tests/**
-            **/storage/**
             **/public/storage/**
             **/.env*
             **/auth.json
