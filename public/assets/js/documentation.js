@@ -117,6 +117,18 @@
                 label: "Branches",
                 icon: "fa-code-branch",
             },
+            villes: {
+                label: "Gestion des Villes",
+                icon: "fa-city",
+            },
+            pays: {
+                label: "Gestion des Pays",
+                icon: "fa-globe",
+            },
+            professions: {
+                label: "Gestion des Professions",
+                icon: "fa-briefcase",
+            },
             agences: {
                 label: "Agences",
                 icon: "fa-building",
@@ -3014,7 +3026,7 @@
 
             {
                 id: "villes-list",
-                module: "souscription",
+                module: "villes",
                 name: "Lister les villes",
                 description:
                     "Récupère les villes triées par libellé avec pagination. La recherche porte sur le code, le libellé et le pays (code ou libellé). Chaque ville inclut l'objet pays associé.",
@@ -3086,8 +3098,216 @@
             },
 
             {
+                id: "villes-create",
+                module: "villes",
+                name: "Créer une ville",
+                description: "Ajoute une ville et l'associe à un pays existant.",
+                method: "POST",
+                path: "/param/villes",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    body: {
+                        codeVille: {
+                            type: "string",
+                            required: true,
+                            max: 50,
+                            description: "Code unique de la ville",
+                        },
+                        MonLibelle: {
+                            type: "string",
+                            required: true,
+                            max: 255,
+                            description: "Libellé de la ville",
+                        },
+                        MonPays: {
+                            type: "string",
+                            required: true,
+                            max: 10,
+                            description: "Code d'un pays existant",
+                        },
+                    },
+                },
+                exampleRequest: {
+                    codeVille: "CIV-00001",
+                    MonLibelle: "ABABIEN",
+                    MonPays: "CIV",
+                },
+                responses: [
+                    {
+                        status: 201,
+                        description: "Ville créée",
+                        example: {
+                            success: true,
+                            message: "Ville créée avec succès.",
+                            code: "VILLE_CREATED",
+                            data: {},
+                        },
+                    },
+                    {
+                        status: 422,
+                        description: "Données invalides ou code déjà utilisé",
+                    },
+                ],
+            },
+            {
+                id: "villes-show",
+                module: "villes",
+                name: "Détails d'une ville",
+                description: "Récupère une ville par son UUID.",
+                method: "GET",
+                path: "/param/villes/{uuid_ville}",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_ville: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID de la ville",
+                        },
+                    },
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Détails de la ville",
+                        example: {
+                            success: true,
+                            message: "Détails de la ville.",
+                            code: "VILLE_FOUND",
+                            data: {
+                                uuid_ville: "af01c86d-c4d1-455c-901a-66b653698000",
+                                codeVille: "CIV-00001",
+                                MonLibelle: "ABABIEN",
+                                MonPays: "CIV",
+                            },
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Ville introuvable",
+                    },
+                ],
+            },
+            {
+                id: "villes-update",
+                module: "villes",
+                name: "Modifier une ville",
+                description: "Met à jour les champs fournis d'une ville.",
+                method: "PUT",
+                path: "/param/villes/{uuid_ville}",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_ville: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID de la ville",
+                        },
+                    },
+                    body: {
+                        codeVille: {
+                            type: "string",
+                            required: false,
+                            max: 50,
+                            description: "Code unique de la ville",
+                        },
+                        MonLibelle: {
+                            type: "string",
+                            required: false,
+                            max: 255,
+                            description: "Libellé de la ville",
+                        },
+                        MonPays: {
+                            type: "string",
+                            required: false,
+                            max: 10,
+                            description: "Code d'un pays existant",
+                        },
+                    },
+                },
+                exampleRequest: {
+                    MonLibelle: "Abidjan",
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Ville mise à jour",
+                        example: {
+                            success: true,
+                            message: "Ville mise à jour avec succès.",
+                            code: "VILLE_UPDATED",
+                            data: {},
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Ville introuvable",
+                    },
+                    {
+                        status: 422,
+                        description: "Données invalides ou code déjà utilisé",
+                    },
+                ],
+            },
+            {
+                id: "villes-delete",
+                module: "villes",
+                name: "Supprimer une ville",
+                description: "Supprime une ville par son UUID.",
+                method: "DELETE",
+                path: "/param/villes/{uuid_ville}",
+                isProtected: true,
+                isDestructive: true,
+                headers: {
+                    Authorization: "******",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_ville: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID de la ville",
+                        },
+                    },
+                    body: {},
+                },
+
+                
+                responses: [
+                    {
+                        status: 200,
+                        description: "Ville supprimée",
+                        example: {
+                            success: true,
+                            message: "Ville supprimée avec succès.",
+                            code: "VILLE_DELETED",
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Ville introuvable",
+                    },
+                ],
+            },
+
+            {
                 id: "pays-list",
-                module: "souscription",
+                module: "pays",
                 name: "Lister les pays",
                 description:
                     "Récupère les pays triés par libellé avec pagination. La recherche porte sur le code ISO3, le libellé et l'indicatif téléphonique.",
@@ -3146,8 +3366,242 @@
             },
 
             {
+                id: "pays-create",
+                module: "pays",
+                name: "Créer un pays",
+                description: "Ajoute un pays.",
+                method: "POST",
+                path: "/param/pays",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    body: {
+                        codePays: {
+                            type: "string",
+                            required: true,
+                            max: 10,
+                            description: "Code unique du pays",
+                        },
+                        MonLibelle: {
+                            type: "string",
+                            required: true,
+                            max: 255,
+                            description: "Libellé du pays",
+                        },
+                        Indicatif: {
+                            type: "string",
+                            required: false,
+                            max: 10,
+                            description: "Indicatif téléphonique (facultatif)",
+                        },
+                        Flag: {
+                            type: "string",
+                            required: false,
+                            max: 10,
+                            description: "Emoji du drapeau (facultatif)",
+                        },
+                        FlagUrl: {
+                            type: "string",
+                            required: false,
+                            max: 255,
+                            description: "URL du drapeau (facultatif)",
+                        },
+                    },
+                },
+                exampleRequest: {
+                    codePays: "CIV",
+                    MonLibelle: "COTE D'IVOIRE",
+                    Indicatif: "+225",
+                    Flag: "🇨🇮",
+                    FlagUrl: "https://flagcdn.com/ci.svg",
+                },
+                responses: [
+                    {
+                        status: 201,
+                        description: "Pays créé",
+                        example: {
+                            success: true,
+                            message: "Pays créé avec succès.",
+                            code: "PAYS_CREATED",
+                            data: {},
+                        },
+                    },
+                    {
+                        status: 422,
+                        description: "Données invalides ou code déjà utilisé",
+                    },
+                ],
+            },
+            {
+                id: "pays-show",
+                module: "pays",
+                name: "Détails d'un pays",
+                description: "Récupère un pays par son UUID.",
+                method: "GET",
+                path: "/param/pays/{uuid_pays}",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_pays: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID du pays",
+                        },
+                    },
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Détails du pays",
+                        example: {
+                            success: true,
+                            message: "Détails du pays.",
+                            code: "PAYS_FOUND",
+                            data: {
+                                uuid_pays: "9b2c1f4e-7a3d-4e5f-8b6c-1d2e3f4a5b6c",
+                                codePays: "CIV",
+                                MonLibelle: "COTE D'IVOIRE",
+                                Indicatif: "+225",
+                                Flag: "🇨🇮",
+                                FlagUrl: "https://flagcdn.com/ci.svg",
+                            },
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Pays introuvable",
+                    },
+                ],
+            },
+            {
+                id: "pays-update",
+                module: "pays",
+                name: "Modifier un pays",
+                description: "Met à jour les champs fournis d'un pays.",
+                method: "PUT",
+                path: "/param/pays/{uuid_pays}",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_pays: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID du pays",
+                        },
+                    },
+                    body: {
+                        codePays: {
+                            type: "string",
+                            required: false,
+                            max: 10,
+                            description: "Code unique du pays",
+                        },
+                        MonLibelle: {
+                            type: "string",
+                            required: false,
+                            max: 255,
+                            description: "Libellé du pays",
+                        },
+                        Indicatif: {
+                            type: "string",
+                            required: false,
+                            max: 10,
+                            description: "Indicatif téléphonique",
+                        },
+                        Flag: {
+                            type: "string",
+                            required: false,
+                            max: 10,
+                            description: "Emoji du drapeau",
+                        },
+                        FlagUrl: {
+                            type: "string",
+                            required: false,
+                            max: 255,
+                            description: "URL du drapeau",
+                        },
+                    },
+                },
+                exampleRequest: {
+                    Indicatif: "+225",
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Pays mis à jour",
+                        example: {
+                            success: true,
+                            message: "Pays mis à jour avec succès.",
+                            code: "PAYS_UPDATED",
+                            data: {},
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Pays introuvable",
+                    },
+                    {
+                        status: 422,
+                        description: "Données invalides ou code déjà utilisé",
+                    },
+                ],
+            },
+            {
+                id: "pays-delete",
+                module: "pays",
+                name: "Supprimer un pays",
+                description: "Supprime un pays par son UUID.",
+                method: "DELETE",
+                path: "/param/pays/{uuid_pays}",
+                isProtected: true,
+                isDestructive: true,
+                headers: {
+                    Authorization: "******",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_pays: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID du pays",
+                        },
+                    },
+                    body: {},
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Pays supprimé",
+                        example: {
+                            success: true,
+                            message: "Pays supprimé avec succès.",
+                            code: "PAYS_DELETED",
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Pays introuvable",
+                    },
+                ],
+            },
+
+            {
                 id: "professions-list",
-                module: "souscription",
+                module: "professions",
                 name: "Lister les professions",
                 description:
                     "Récupère les professions triées par libellé avec pagination. La recherche porte sur le code et le libellé.",
@@ -3195,6 +3649,156 @@
                                 total: 0,
                             },
                         },
+                    },
+                ],
+            },
+
+            {
+                id: "professions-create",
+                module: "professions",
+                name: "Créer une profession",
+                description: "Ajoute une profession.",
+                method: "POST",
+                path: "/param/professions",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    body: {
+                        code_profession: {
+                            type: "string",
+                            required: true,
+                            max: 50,
+                            description: "Code unique de la profession",
+                        },
+                        MonLibelle: {
+                            type: "string",
+                            required: true,
+                            max: 255,
+                            description: "Libellé de la profession",
+                        },
+                    },
+                },
+                exampleRequest: {
+                    code_profession: "PROF-001",
+                    MonLibelle: "Enseignant",
+                },
+                responses: [
+                    {
+                        status: 201,
+                        description: "Profession créée",
+                        example: {
+                            success: true,
+                            message: "Profession créée avec succès.",
+                            code: "PROFESSION_CREATED",
+                            data: {},
+                        },
+                    },
+                    {
+                        status: 422,
+                        description: "Données invalides ou code déjà utilisé",
+                    },
+                ],
+            },
+            {
+                id: "professions-update",
+                module: "professions",
+                name: "Modifier une profession",
+                description: "Met à jour les champs fournis d'une profession.",
+                method: "PUT",
+                path: "/param/professions/{uuid_profession}",
+                isProtected: true,
+                headers: {
+                    Authorization: "******",
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_profession: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID de la profession",
+                        },
+                    },
+                    body: {
+                        code_profession: {
+                            type: "string",
+                            required: false,
+                            max: 50,
+                            description: "Code unique de la profession",
+                        },
+                        MonLibelle: {
+                            type: "string",
+                            required: false,
+                            max: 255,
+                            description: "Libellé de la profession",
+                        },
+                    },
+                },
+                exampleRequest: {
+                    MonLibelle: "Enseignant-chercheur",
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Profession mise à jour",
+                        example: {
+                            success: true,
+                            message: "Ville mise à jour avec succès.",
+                            code: "PROFESSION_UPDATED",
+                            data: {},
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Profession introuvable",
+                    },
+                    {
+                        status: 422,
+                        description: "Données invalides ou code déjà utilisé",
+                    },
+                ],
+            },
+            {
+                id: "professions-delete",
+                module: "professions",
+                name: "Supprimer une profession",
+                description: "Supprime une profession par son UUID.",
+                method: "DELETE",
+                path: "/param/professions/{uuid_profession}",
+                isProtected: true,
+                isDestructive: true,
+                headers: {
+                    Authorization: "******",
+                    Accept: "application/json",
+                },
+                requestParams: {
+                    path: {
+                        uuid_profession: {
+                            type: "uuid",
+                            required: true,
+                            description: "UUID de la profession",
+                        },
+                    },
+                    body: {},
+                },
+                responses: [
+                    {
+                        status: 200,
+                        description: "Profession supprimée",
+                        example: {
+                            success: true,
+                            message: "Profession supprimée avec succès.",
+                            code: "PROFESSION_DELETED",
+                        },
+                    },
+                    {
+                        status: 404,
+                        description: "Profession introuvable",
                     },
                 ],
             },

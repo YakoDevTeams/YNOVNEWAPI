@@ -29,7 +29,8 @@ class ProfessionController extends Controller
             $query->where('code_profession', $request->input('code_profession'));
         }
 
-        $perPage = min(max($request->integer('per_page', 20), 1), 100);
+        $perPage = $request->integer('per_page', 20);
+        // $perPage = min(max($request->integer('per_page', 20), 1), 100);
         $professions = $query->orderBy('MonLibelle')->paginate($perPage);
 
         return response()->json([
