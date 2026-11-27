@@ -76,7 +76,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          timeout: 120000
+          timeout: 240000
           local-dir: ./
           server-dir: ${{ steps.target.outputs.server_dir }}
           dangerous-clean-slate: false
