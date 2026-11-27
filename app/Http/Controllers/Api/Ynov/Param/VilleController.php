@@ -33,7 +33,8 @@ class VilleController extends Controller
             $query->where('MonPays', $request->input('code_pays'));
         }
 
-        $perPage = min(max($request->integer('per_page', 20), 1), 100);
+        $perPage = $request->integer('per_page', 20);
+        // $perPage = min(max($request->integer('per_page', 20), 1), 100);
         $villes = $query->with('pays')->orderBy('MonLibelle')->paginate($perPage);
 
         return response()->json([

@@ -28,7 +28,7 @@ class BrancheController extends Controller
             $query->where('etat', $request->input('etat'));
         }
 
-        $perPage = min(max($request->integer('per_page', 20), 1), 100);
+        $perPage = $request->integer('per_page', 20);
         $branches = $query->orderBy('MonLibelle')->paginate($perPage);
 
         return response()->json([
